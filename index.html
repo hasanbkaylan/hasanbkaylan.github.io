@@ -183,7 +183,7 @@
       width: 100%;
       max-width: 520px;
       --pad: 20px;
-      padding: calc(64px + env(safe-area-inset-top)) var(--pad) calc(var(--nav-h) + 24px + env(safe-area-inset-bottom));
+      padding: calc(32px + env(safe-area-inset-top)) var(--pad) calc(var(--nav-h) + 24px + env(safe-area-inset-bottom));
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -523,7 +523,7 @@
 
     /* ================= Sağ üst eylem grubu (GitHub · İletişim · Dil) ================= */
     .top-actions {
-      position: fixed;
+      position: absolute;   /* ilk sayfanın üst köşesine sabit: kaydırınca birlikte gelmez */
       top: calc(10px + env(safe-area-inset-top));
       right: calc(10px + env(safe-area-inset-right));
       z-index: 30;
@@ -629,59 +629,59 @@
 </head>
 <body>
 
-<!-- Sağ üst: GitHub · İletişim · Dil -->
-<div class="top-actions" role="toolbar" aria-label="Hızlı eylemler" data-i18n-attr="aria-label:topActions">
-  <md-icon-button href="https://github.com/hasanbkaylan" target="_blank" aria-label="GitHub">
-    <svg class="gh-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.921.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-  </md-icon-button>
-
-  <md-icon-button id="contactBtn" aria-label="İletişim" data-i18n-attr="aria-label:topContact">
-    <md-icon>forum</md-icon>
-  </md-icon-button>
-  <md-menu id="contactMenu" anchor="contactBtn" positioning="popover" anchor-corner="end-end" menu-corner="start-end">
-    <md-menu-item href="mailto:hasanberatkaylan@gmail.com">
-      <md-icon slot="start">mail</md-icon>
-      <div slot="headline" data-i18n="mailLbl">E-posta</div>
-      <div slot="supporting-text">hasanberatkaylan@gmail.com</div>
-    </md-menu-item>
-    <md-menu-item href="https://t.me/hbkaylan" target="_blank">
-      <span slot="start" class="flag"><svg class="gh-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></span>
-      <div slot="headline">Telegram</div>
-      <div slot="supporting-text">@hbkaylan</div>
-    </md-menu-item>
-    <md-menu-item href="tel:+905518912600">
-      <md-icon slot="start">call</md-icon>
-      <div slot="headline" data-i18n="telLbl">Telefon</div>
-      <div slot="supporting-text">+90 551 891 26 00</div>
-    </md-menu-item>
-  </md-menu>
-
-  <md-icon-button id="langBtn" aria-label="Dil" data-i18n-attr="aria-label:topLang">
-    <md-icon>translate</md-icon>
-  </md-icon-button>
-  <md-menu id="langMenu" anchor="langBtn" positioning="popover" anchor-corner="end-end" menu-corner="start-end">
-    <md-menu-item data-lang="tr">
-      <span slot="start" class="flag"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" fill="#E30A17"/><circle cx="9.4" cy="12" r="5" fill="#fff"/><circle cx="10.8" cy="12" r="4.1" fill="#E30A17"/><polygon fill="#fff" points="16.7,12 15.08,12.56 15.04,14.28 14,12.91 12.36,13.41 13.34,12 12.36,10.59 14,11.09 15.04,9.72 15.08,11.44"/></svg></span>
-      <div slot="headline">Türkçe</div>
-      <md-icon slot="end" class="check">check</md-icon>
-    </md-menu-item>
-    <md-menu-item data-lang="en">
-      <span slot="start" class="flag"><svg viewBox="15 0 30 30" aria-hidden="true"><rect x="0" width="60" height="30" fill="#012169"/><path d="M0,0 60,30M60,0 0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 60,30M60,0 0,30" stroke="#C8102E" stroke-width="2"/><path d="M30,0v30M0,15h60" stroke="#fff" stroke-width="10"/><path d="M30,0v30M0,15h60" stroke="#C8102E" stroke-width="6"/></svg></span>
-      <div slot="headline">English</div>
-      <md-icon slot="end" class="check">check</md-icon>
-    </md-menu-item>
-    <md-menu-item data-lang="de">
-      <span slot="start" class="flag"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="8" fill="#000"/><rect y="8" width="24" height="8" fill="#DD0000"/><rect y="16" width="24" height="8" fill="#FFCE00"/></svg></span>
-      <div slot="headline">Deutsch</div>
-      <md-icon slot="end" class="check">check</md-icon>
-    </md-menu-item>
-  </md-menu>
-</div>
-
 <main id="scroller">
 
   <!-- 1 · Merhaba -->
   <section class="page" id="s0" aria-label="Merhaba" data-i18n-attr="aria-label:navHome">
+    <!-- Sağ üst: GitHub · İletişim · Dil -->
+    <div class="top-actions" role="toolbar" aria-label="Hızlı eylemler" data-i18n-attr="aria-label:topActions">
+      <md-icon-button href="https://github.com/hasanbkaylan" target="_blank" aria-label="GitHub">
+        <svg class="gh-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.921.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      </md-icon-button>
+
+      <md-icon-button id="contactBtn" aria-label="İletişim" data-i18n-attr="aria-label:topContact">
+        <md-icon>forum</md-icon>
+      </md-icon-button>
+      <md-menu id="contactMenu" anchor="contactBtn" positioning="popover" anchor-corner="end-end" menu-corner="start-end">
+        <md-menu-item href="mailto:hasanberatkaylan@gmail.com">
+          <md-icon slot="start">mail</md-icon>
+          <div slot="headline" data-i18n="mailLbl">E-posta</div>
+          <div slot="supporting-text">hasanberatkaylan@gmail.com</div>
+        </md-menu-item>
+        <md-menu-item href="https://t.me/hbkaylan" target="_blank">
+          <span slot="start" class="flag"><svg class="gh-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></span>
+          <div slot="headline">Telegram</div>
+          <div slot="supporting-text">@hbkaylan</div>
+        </md-menu-item>
+        <md-menu-item href="tel:+905518912600">
+          <md-icon slot="start">call</md-icon>
+          <div slot="headline" data-i18n="telLbl">Telefon</div>
+          <div slot="supporting-text">+90 551 891 26 00</div>
+        </md-menu-item>
+      </md-menu>
+
+      <md-icon-button id="langBtn" aria-label="Dil" data-i18n-attr="aria-label:topLang">
+        <md-icon>translate</md-icon>
+      </md-icon-button>
+      <md-menu id="langMenu" anchor="langBtn" positioning="popover" anchor-corner="end-end" menu-corner="start-end">
+        <md-menu-item data-lang="tr">
+          <span slot="start" class="flag"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" fill="#E30A17"/><circle cx="9.4" cy="12" r="5" fill="#fff"/><circle cx="10.8" cy="12" r="4.1" fill="#E30A17"/><polygon fill="#fff" points="16.7,12 15.08,12.56 15.04,14.28 14,12.91 12.36,13.41 13.34,12 12.36,10.59 14,11.09 15.04,9.72 15.08,11.44"/></svg></span>
+          <div slot="headline">Türkçe</div>
+          <md-icon slot="end" class="check">check</md-icon>
+        </md-menu-item>
+        <md-menu-item data-lang="en">
+          <span slot="start" class="flag"><svg viewBox="15 0 30 30" aria-hidden="true"><rect x="0" width="60" height="30" fill="#012169"/><path d="M0,0 60,30M60,0 0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 60,30M60,0 0,30" stroke="#C8102E" stroke-width="2"/><path d="M30,0v30M0,15h60" stroke="#fff" stroke-width="10"/><path d="M30,0v30M0,15h60" stroke="#C8102E" stroke-width="6"/></svg></span>
+          <div slot="headline">English</div>
+          <md-icon slot="end" class="check">check</md-icon>
+        </md-menu-item>
+        <md-menu-item data-lang="de">
+          <span slot="start" class="flag"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="8" fill="#000"/><rect y="8" width="24" height="8" fill="#DD0000"/><rect y="16" width="24" height="8" fill="#FFCE00"/></svg></span>
+          <div slot="headline">Deutsch</div>
+          <md-icon slot="end" class="check">check</md-icon>
+        </md-menu-item>
+      </md-menu>
+    </div>
+
     <div class="hero-bg" aria-hidden="true">
       <img src="assets/hero.jpg" alt="" draggable="false">
     </div>
@@ -926,131 +926,42 @@
 
   const $ = id => document.getElementById(id);
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  /* ---------- Dil sistemi (TR · EN · DE) ---------- */
+  /* ---------- Dil sistemi (sözlükler: i18n/<dil>/strings.json) ---------- */
   const LANGS = ['tr', 'en', 'de'];
-  const LOCALES = { tr: 'tr-TR', en: 'en-US', de: 'de-DE' };
   const COUNTRY_LANG = { TR: 'tr', DE: 'de', AT: 'de', CH: 'de', LI: 'de' };
-  const ord = n => { const x = ['th', 'st', 'nd', 'rd'], v = n % 100; return n + (x[(v - 20) % 10] || x[v] || x[0]); };
 
-  const STR = {
-    tr: {
-      navLabel: `Bölümler`, navHome: `Merhaba`, navAbout: `Ben`, navJourney: `Yolculuk`, navMemories: `Anılar`, navNow: `Şu an`,
-      topActions: `Hızlı eylemler`, topContact: `İletişim`, topLang: `Dil`, mailLbl: `E-posta`, telLbl: `Telefon`,
-      heroTitle: `Merhaba,<br>ben Hasan.`,
-      heroIntro: `{age} yaşındayım. Elektronik, mekanik ve teknolojiyle aram iyi. Bir şeyleri tamir etmeyi, tasarlamayı ve açık kaynak projelere katkı vermeyi seviyorum.`,
-      chipsLabel: `İlgi alanlarım`, chipElec: `Elektronik`, chipMech: `Mekanik`, chipOss: `Açık kaynak`, chipDesign: `Mobil tasarım`, chipTr: `Türkçe çeviri`,
-      btnStart: `Hikâyemi keşfet`, btnMusic: `Ne dinliyorum?`,
-      aboutTitle: `Biraz benden`, schoolKinderSub: `Anaokulu, ilkokul ve ortaokul`, highSub: `Şu an lisede okuyorum`,
-      bdayDate: `25 Temmuz 2010`,
-      bdayToday: `Bugün doğum günüm!`,
-      bdayNext: ({ n, days }) => `${n}. yaş günüme ${days} gün kaldı`,
-      story1: `Küçükken bir gün boyunca bir çalar saati tamir etmeye çalışmışım. Tamir edebildim mi, hatırlamıyorum.`,
-      story2: `İlkokulda sınıf başkanıydım. Bir gün öğretmenimiz sınıftan çıkmak zorunda kalınca beni bilgisayarın başına geçirdi. Trackpad'den kaydırma yapmayı bile bilmiyordum.`,
-      journeyTitle: `Yolculuğum`,
-      j1t: `Her şey evde başladı`, j1w: `2020 · Pandemi`,
-      j1d: `Herkes evlere kapanınca eğitim uzaktan yapılmaya başlandı. Evimize ilk kez bir bilgisayar ve ev interneti geldi. O günden beri teknolojiyle ve insanlara faydalı bir şeyler yapmakla uğraşıyorum.`,
-      j2t: `Laptop bozuldu`, j2w: `2024 başı`,
-      j2d: `Anakart arızası yüzünden laptopum sürekli kapanmaya başladı. Defalarca tamire götürdük ama düzelmedi.`,
-      j3t: `Her şey silindi`, j3w: `2026 başı`,
-      j3d: `Tamirden döndüğünde hâlâ bozuktu, üstüne içindeki her şey silinmişti: projelerim, videolarımız ve çocukluk fotoğraflarım. Kuzenlerimden sadece 40-50 fotoğrafı kurtarabildik.`,
-      j4t: `Yeniden başlıyorum`, j4w: `Şimdi`,
-      j4d: `Artık her şeyi yedekliyorum. Bilgisayarım olmadığı için telefondan tasarımlar yapıyor, açık kaynak uygulamalara Türkçe çeviri katkısı veriyorum. Yeni bir bilgisayar için para biriktiriyorum.`,
-      memTitle: `Elimde kalan anılar`, memSub: `Verilerimi kaybettikten sonra elimde kalan çocukluk karelerinden bazıları.`,
-      galleryLabel: `Fotoğraflar`, swipe: `Yana kaydır`,
-      alt1: `Başında kırmızı bir kovayla gülen küçük Hasan`, alt2: `Elinde mavi bir oyuncakla poz veren küçük Hasan`, alt3: `Doğum günü pastasının mumlarını üfleyen küçük Hasan`,
-      cap1: `Başımda kova, suratımda koca bir gülümseme.`, cap2: `Elimde yine bir şey var: belki bozulmuş, belki tamir edilecek.`, cap3: `Doğum günü pastası ve dilek tutma zamanı.`,
-      nowTitle: `Şu an`, health: `Sağlık`, ringLabel: `Günlük adım hedefi`, sleepLabel: `Uyku hedefi`, unitSteps: `adım`,
-      syncNow: `az önce`, sync30: `30 sn önce`,
-      sleepFmt: ({ h, m }) => `${h} sa ${m} dk`,
-      extra: ({ km, kcal, goal }) => `${km} km · ${kcal} kcal · hedef ${goal} adım`,
-      musicTitle: `Hasan ne dinliyor?`,
-      loading: `Yükleniyor`, searching: `Önizleme aranıyor`, playPrev: `30 saniyelik önizlemeyi çal`, pausePrev: `Önizlemeyi duraklat`, noPrev: `Bu şarkı için önizleme bulunamadı`,
-      noSongs: `Henüz şarkı yok`, musicFail: `Müzik bilgisi alınamadı`, musicRetry: `Biraz sonra tekrar denenecek`, nowPlaying: `Şu an çalıyor`,
-      agoNow: `az önce`, agoMin: ({ n }) => `${n} dk önce`, agoHour: ({ n }) => `${n} sa önce`, agoDay: ({ n }) => `${n} gün önce`
-    },
-    en: {
-      navLabel: `Sections`, navHome: `Home`, navAbout: `About`, navJourney: `Journey`, navMemories: `Memories`, navNow: `Now`,
-      topActions: `Quick actions`, topContact: `Contact`, topLang: `Language`, mailLbl: `Email`, telLbl: `Phone`,
-      heroTitle: `Hello,<br>I'm Hasan.`,
-      heroIntro: `I'm {age} years old. I'm into electronics, mechanics, and technology. I love fixing things, designing them, and contributing to open-source projects.`,
-      chipsLabel: `My interests`, chipElec: `Electronics`, chipMech: `Mechanics`, chipOss: `Open source`, chipDesign: `Mobile design`, chipTr: `Turkish translation`,
-      btnStart: `Discover my story`, btnMusic: `What am I listening to?`,
-      aboutTitle: `A little about me`, schoolKinderSub: `Kindergarten, primary and middle school`, highSub: `Currently in high school`,
-      bdayDate: `July 25, 2010`,
-      bdayToday: `It's my birthday today!`,
-      bdayNext: ({ n, days }) => `${days} ${days === 1 ? 'day' : 'days'} until my ${ord(n)} birthday`,
-      story1: `When I was little, I apparently spent a whole day trying to fix an alarm clock. Whether I actually managed it, I can't remember.`,
-      story2: `In primary school I was class president. One day, when our teacher had to step out of the classroom, she sat me down at the computer. I didn't even know how to scroll with a trackpad.`,
-      journeyTitle: `My journey`,
-      j1t: `It all started at home`, j1w: `2020 · The pandemic`,
-      j1d: `When everyone had to stay indoors, school moved online. That's when we got our first computer and home internet. Ever since, I've been busy with technology and with building things that help people.`,
-      j2t: `My laptop broke`, j2w: `Early 2024`,
-      j2d: `A motherboard fault made my laptop shut down constantly. We took it in for repair again and again, but it never got fixed.`,
-      j3t: `Everything was wiped`, j3w: `Early 2026`,
-      j3d: `When it came back from repair it was still broken, and everything on it had been erased: my projects, our videos, and my childhood photos. We were only able to recover 40–50 photos, from my cousins.`,
-      j4t: `Starting over`, j4w: `Now`,
-      j4d: `I back everything up now. Since I don't have a computer, I make designs on my phone and contribute Turkish translations to open-source apps. I'm saving up for a new computer.`,
-      memTitle: `Memories I have left`, memSub: `A few childhood snapshots that survived after I lost my data.`,
-      galleryLabel: `Photos`, swipe: `Swipe sideways`,
-      alt1: `Little Hasan laughing with a red bucket on his head`, alt2: `Little Hasan posing with a blue toy in his hands`, alt3: `Little Hasan blowing out the candles on a birthday cake`,
-      cap1: `A bucket on my head and a huge grin on my face.`, cap2: `Something in my hands again: maybe broken, maybe waiting to be fixed.`, cap3: `Birthday cake and time to make a wish.`,
-      nowTitle: `Right now`, health: `Health`, ringLabel: `Daily step goal`, sleepLabel: `Sleep goal`, unitSteps: `steps`,
-      syncNow: `just now`, sync30: `30 s ago`,
-      sleepFmt: ({ h, m }) => `${h} h ${m} min`,
-      extra: ({ km, kcal, goal }) => `${km} km · ${kcal} kcal · goal ${goal} steps`,
-      musicTitle: `What is Hasan listening to?`,
-      loading: `Loading`, searching: `Looking for a preview`, playPrev: `Play 30-second preview`, pausePrev: `Pause preview`, noPrev: `No preview found for this song`,
-      noSongs: `No songs yet`, musicFail: `Couldn't load music info`, musicRetry: `Will try again shortly`, nowPlaying: `Now playing`,
-      agoNow: `just now`, agoMin: ({ n }) => `${n} min ago`, agoHour: ({ n }) => `${n} h ago`, agoDay: ({ n }) => `${n} ${n === 1 ? 'day' : 'days'} ago`
-    },
-    de: {
-      navLabel: `Bereiche`, navHome: `Hallo`, navAbout: `Über mich`, navJourney: `Weg`, navMemories: `Momente`, navNow: `Jetzt`,
-      topActions: `Schnellaktionen`, topContact: `Kontakt`, topLang: `Sprache`, mailLbl: `E-Mail`, telLbl: `Telefon`,
-      heroTitle: `Hallo,<br>ich bin Hasan.`,
-      heroIntro: `Ich bin {age} Jahre alt und begeistere mich für Elektronik, Mechanik und Technik. Ich repariere und gestalte gern Dinge und trage zu Open-Source-Projekten bei.`,
-      chipsLabel: `Meine Interessen`, chipElec: `Elektronik`, chipMech: `Mechanik`, chipOss: `Open Source`, chipDesign: `Mobile Design`, chipTr: `Türkisch-Übersetzung`,
-      btnStart: `Meine Geschichte entdecken`, btnMusic: `Was höre ich gerade?`,
-      aboutTitle: `Ein wenig über mich`, schoolKinderSub: `Kindergarten, Grundschule und Mittelstufe`, highSub: `Ich besuche derzeit das Gymnasium`,
-      bdayDate: `25. Juli 2010`,
-      bdayToday: `Heute habe ich Geburtstag!`,
-      bdayNext: ({ n, days }) => `Noch ${days} ${days === 1 ? 'Tag' : 'Tage'} bis zu meinem ${n}. Geburtstag`,
-      story1: `Als Kind habe ich angeblich einen ganzen Tag lang versucht, einen Wecker zu reparieren. Ob es mir gelungen ist, weiß ich nicht mehr.`,
-      story2: `In der Grundschule war ich Klassensprecher. Als unsere Lehrkraft eines Tages den Raum verlassen musste, setzte sie mich an den Computer. Ich wusste nicht einmal, wie man mit dem Trackpad scrollt.`,
-      journeyTitle: `Mein Weg`,
-      j1t: `Alles begann zu Hause`, j1w: `2020 · Pandemie`,
-      j1d: `Als alle zu Hause bleiben mussten, wurde der Unterricht ins Netz verlegt. Damals bekamen wir zum ersten Mal einen Computer und Internet zu Hause. Seitdem beschäftige ich mich mit Technik und versuche, Dinge zu schaffen, die anderen nützen.`,
-      j2t: `Mein Laptop ging kaputt`, j2w: `Anfang 2024`,
-      j2d: `Wegen eines Mainboard-Defekts schaltete sich mein Laptop ständig aus. Wir brachten ihn mehrfach zur Reparatur, doch das Problem blieb.`,
-      j3t: `Alles wurde gelöscht`, j3w: `Anfang 2026`,
-      j3d: `Nach der Reparatur war er immer noch defekt, und obendrein war alles darauf gelöscht: meine Projekte, unsere Videos und meine Kindheitsfotos. Nur 40–50 Fotos konnten wir von meinen Cousins zurückbekommen.`,
-      j4t: `Neuanfang`, j4w: `Jetzt`,
-      j4d: `Jetzt sichere ich alles. Da ich keinen Computer habe, gestalte ich am Handy und übersetze Open-Source-Apps ins Türkische. Auf einen neuen Computer spare ich gerade.`,
-      memTitle: `Was mir an Erinnerungen geblieben ist`, memSub: `Einige Kindheitsfotos, die nach dem Datenverlust noch übrig sind.`,
-      galleryLabel: `Fotos`, swipe: `Seitlich wischen`,
-      alt1: `Der kleine Hasan lacht mit einem roten Eimer auf dem Kopf`, alt2: `Der kleine Hasan posiert mit einem blauen Spielzeug in der Hand`, alt3: `Der kleine Hasan bläst die Kerzen auf seiner Geburtstagstorte aus`,
-      cap1: `Einen Eimer auf dem Kopf und ein breites Grinsen im Gesicht.`, cap2: `Schon wieder habe ich etwas in der Hand: vielleicht kaputt, vielleicht reif für die Reparatur.`, cap3: `Geburtstagstorte und Zeit für einen Wunsch.`,
-      nowTitle: `Gerade jetzt`, health: `Gesundheit`, ringLabel: `Tägliches Schrittziel`, sleepLabel: `Schlafziel`, unitSteps: `Schritte`,
-      syncNow: `gerade eben`, sync30: `vor 30 Sek.`,
-      sleepFmt: ({ h, m }) => `${h} Std. ${m} Min.`,
-      extra: ({ km, kcal, goal }) => `${km} km · ${kcal} kcal · Ziel: ${goal} Schritte`,
-      musicTitle: `Was hört Hasan gerade?`,
-      loading: `Wird geladen`, searching: `Vorschau wird gesucht`, playPrev: `30-Sekunden-Vorschau abspielen`, pausePrev: `Vorschau pausieren`, noPrev: `Keine Vorschau für diesen Song gefunden`,
-      noSongs: `Noch keine Songs`, musicFail: `Musikinfos konnten nicht geladen werden`, musicRetry: `Gleich wird es erneut versucht`, nowPlaying: `Läuft gerade`,
-      agoNow: `gerade eben`, agoMin: ({ n }) => `vor ${n} Min.`, agoHour: ({ n }) => `vor ${n} Std.`, agoDay: ({ n }) => `vor ${n} ${n === 1 ? 'Tag' : 'Tagen'}`
-    }
-  };
-
-  let lang = 'tr', userChose = false;
+  let lang = 'tr', userChose = false, langSeq = 0;
   const ctx = { age: 16 };
   const langHooks = [];
+  const dicts = {}, pending = {};
+
+  function loadDict(code) {
+    if (dicts[code]) return Promise.resolve(dicts[code]);
+    return pending[code] || (pending[code] = fetch(`i18n/${code}/strings.json`)
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(d => (dicts[code] = d))
+      .catch(e => { console.warn('Dil dosyası yüklenemedi:', code, e); delete pending[code]; return null; }));
+  }
+  const locale = () => (dicts[lang] && dicts[lang]._meta && dicts[lang]._meta.locale) || lang;
+  const nf = () => new Intl.NumberFormat(locale());
+  function ordinal(n) {
+    const fmt = (dicts[lang] && dicts[lang]._meta && dicts[lang]._meta.ordinal) || { other: '{n}.' };
+    return (fmt[new Intl.PluralRules(locale(), { type: 'ordinal' }).select(n)] || fmt.other).replace('{n}', n);
+  }
+  // Değer: düz metin ya da { _plural: 'değişken', one: '...', other: '...' }
   const tx = (key, vars) => {
-    let v = STR[lang][key];
-    if (v === undefined) v = STR.tr[key];
-    if (v === undefined) return key;
-    if (typeof v === 'function') return v(vars || {});
-    return v.replace(/\{(\w+)\}/g, (_, k) => (vars && vars[k] !== undefined ? vars[k] : ctx[k] !== undefined ? ctx[k] : ''));
+    const d = dicts[lang], base = dicts.tr;
+    let v = d && d[key];
+    if (v === undefined && base) v = base[key];
+    if (v === undefined) return '';
+    const all = Object.assign({}, ctx, vars);
+    if (all.n !== undefined) all.ord = ordinal(all.n);
+    if (typeof v === 'object') {
+      const cat = new Intl.PluralRules(locale()).select(all[v._plural]);
+      v = v[cat] !== undefined ? v[cat] : v.other;
+    }
+    return v.replace(/\{(\w+)\}/g, (_, k) => (all[k] !== undefined ? all[k] : ''));
   };
-  const nf = () => new Intl.NumberFormat(LOCALES[lang]);
 
   function applyStatic() {
     document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = tx(el.dataset.i18n); });
@@ -1063,11 +974,14 @@
     });
   }
 
-  function setLang(code, manual) {
+  async function setLang(code, manual) {
     if (!LANGS.includes(code)) code = 'en';
+    if (manual) { try { localStorage.setItem('lang', code); } catch (e) { /* depolama kapalı */ } }
+    const seq = ++langSeq;
+    const [d] = await Promise.all([loadDict(code), loadDict('tr')]);
+    if (seq !== langSeq || !d) return;          // yeni bir seçim geldi ya da dosya yüklenemedi
     lang = code;
     document.documentElement.lang = code;
-    if (manual) { try { localStorage.setItem('lang', code); } catch (e) { /* depolama kapalı */ } }
     langHooks.forEach(fn => fn());
     applyStatic();
     document.querySelectorAll('#langMenu md-menu-item').forEach(item => {
@@ -1239,7 +1153,7 @@
       shownSteps = steps;
       $('steps').textContent = nf().format(steps);
       $('stepRing').value = Math.min(1, steps / 10000);
-      const km = new Intl.NumberFormat(LOCALES[lang], { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(steps * 0.00072);
+      const km = new Intl.NumberFormat(locale(), { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(steps * 0.00072);
       $('extra').textContent = tx('extra', { km, kcal: Math.round(steps * 0.04), goal: nf().format(10000) });
     }
     // Nabız hedefe en fazla 5 saniyede 1 bpm yaklaşır: ani sıçrama olmaz
@@ -1494,7 +1408,7 @@
     item.addEventListener('click', () => { userChose = true; setLang(item.dataset.lang, true); });
   });
   const detected = detectLang();
-  setLang(detected.code);
+  const langReady = setLang(detected.code);
   if (detected.needIp) {
     langFromIp().then(code => { if (code && !userChose) setLang(code); });
   }
@@ -1504,7 +1418,7 @@
     document.body.classList.add('ready');
     document.querySelectorAll('#s0 .rise').forEach(() => {});
   };
-  const loaded = Promise.all([customElements.whenDefined('md-ripple'), document.fonts.ready]);
+  const loaded = Promise.all([customElements.whenDefined('md-ripple'), document.fonts.ready, langReady]);
   const timeout = new Promise(r => setTimeout(r, 3000));
   Promise.race([loaded, timeout]).then(async () => {
     // esm.run ulaşılamazsa resmî paketi başka bir CDN'den yükle
