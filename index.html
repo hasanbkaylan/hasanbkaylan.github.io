@@ -1,0 +1,1148 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Hasan</title>
+  <meta name="description" content="Hasan'ın kişisel sitesi.">
+  <meta name="theme-color" content="#cfe5ff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#004a77" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=block">
+
+  <!-- Material Web: import map + ES modülleri -->
+  <script type="importmap">
+  {
+    "imports": {
+      "@material/web/": "https://esm.run/@material/web/"
+    }
+  }
+  </script>
+  <script type="module">
+    import '@material/web/all.js';
+  </script>
+  <script type="module">
+    // Resmî MD3 yazı tipi ölçeği (ayrı modül: başarısız olursa bileşenleri etkilemez)
+    try {
+      const { styles } = await import('@material/web/typography/md-typescale-styles.js');
+      document.adoptedStyleSheets = [...document.adoptedStyleSheets, styles.styleSheet];
+    } catch (e) { console.warn('typescale yüklenemedi', e); }
+  </script>
+  <script>document.documentElement.classList.add('js');</script>
+
+  <style>
+    /* ================= MD3 renk token'ları (açık) ================= */
+    :root {
+      --md-sys-color-primary: #00639b;
+      --md-sys-color-on-primary: #ffffff;
+      --md-sys-color-primary-container: #cfe5ff;
+      --md-sys-color-on-primary-container: #001d33;
+      --md-sys-color-secondary: #51606f;
+      --md-sys-color-on-secondary: #ffffff;
+      --md-sys-color-secondary-container: #d4e4f6;
+      --md-sys-color-on-secondary-container: #0d1d2a;
+      --md-sys-color-tertiary: #65587b;
+      --md-sys-color-on-tertiary: #ffffff;
+      --md-sys-color-tertiary-container: #ebdcff;
+      --md-sys-color-on-tertiary-container: #201634;
+      --md-sys-color-error: #ba1a1a;
+      --md-sys-color-on-error: #ffffff;
+      --md-sys-color-error-container: #ffdad6;
+      --md-sys-color-on-error-container: #410002;
+      --md-sys-color-background: #f8f9ff;
+      --md-sys-color-on-background: #191c20;
+      --md-sys-color-surface: #f8f9ff;
+      --md-sys-color-on-surface: #191c20;
+      --md-sys-color-surface-variant: #dee3eb;
+      --md-sys-color-on-surface-variant: #42474e;
+      --md-sys-color-outline: #72777f;
+      --md-sys-color-outline-variant: #c2c7cf;
+      --md-sys-color-surface-tint: #00639b;
+      --md-sys-color-surface-container-lowest: #ffffff;
+      --md-sys-color-surface-container-low: #f2f3f9;
+      --md-sys-color-surface-container: #eceef4;
+      --md-sys-color-surface-container-high: #e6e8ee;
+      --md-sys-color-surface-container-highest: #e0e2e8;
+      --md-sys-color-inverse-surface: #2e3135;
+      --md-sys-color-inverse-on-surface: #eff0f7;
+      --md-sys-color-inverse-primary: #98cbff;
+      --md-sys-color-scrim: #000000;
+      --md-sys-color-shadow: #000000;
+
+      --md-sys-shape-corner-large: 16px;
+      --md-sys-shape-corner-extra-large: 28px;
+      --md-sys-motion-easing-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
+      --md-sys-motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+
+      --nav-h: 80px;
+      color-scheme: light dark;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --md-sys-color-primary: #98cbff;
+        --md-sys-color-on-primary: #003354;
+        --md-sys-color-primary-container: #004a77;
+        --md-sys-color-on-primary-container: #cfe5ff;
+        --md-sys-color-secondary: #b8c8da;
+        --md-sys-color-on-secondary: #233240;
+        --md-sys-color-secondary-container: #394857;
+        --md-sys-color-on-secondary-container: #d4e4f6;
+        --md-sys-color-tertiary: #cfbdeb;
+        --md-sys-color-on-tertiary: #362b4a;
+        --md-sys-color-tertiary-container: #4d4162;
+        --md-sys-color-on-tertiary-container: #ebdcff;
+        --md-sys-color-error: #ffb4ab;
+        --md-sys-color-on-error: #690005;
+        --md-sys-color-error-container: #93000a;
+        --md-sys-color-on-error-container: #ffdad6;
+        --md-sys-color-background: #101418;
+        --md-sys-color-on-background: #e0e2e8;
+        --md-sys-color-surface: #101418;
+        --md-sys-color-on-surface: #e0e2e8;
+        --md-sys-color-surface-variant: #42474e;
+        --md-sys-color-on-surface-variant: #c2c7cf;
+        --md-sys-color-outline: #8c9199;
+        --md-sys-color-outline-variant: #42474e;
+        --md-sys-color-surface-tint: #98cbff;
+        --md-sys-color-surface-container-lowest: #0b0e12;
+        --md-sys-color-surface-container-low: #191c20;
+        --md-sys-color-surface-container: #1d2024;
+        --md-sys-color-surface-container-high: #272a2f;
+        --md-sys-color-surface-container-highest: #32353a;
+        --md-sys-color-inverse-surface: #e0e2e8;
+        --md-sys-color-inverse-on-surface: #2e3135;
+        --md-sys-color-inverse-primary: #00639b;
+      }
+    }
+
+    /* Resmî yazı tipi sınıfları yüklenemezse devreye giren düşük öncelikli yedek (MD3 ölçeği) */
+    :where(.md-typescale-display-small){font:400 36px/44px Roboto,system-ui,sans-serif}
+    :where(.md-typescale-display-medium){font:400 45px/52px Roboto,system-ui,sans-serif}
+    :where(.md-typescale-headline-large){font:400 32px/40px Roboto,system-ui,sans-serif}
+    :where(.md-typescale-headline-medium){font:400 28px/36px Roboto,system-ui,sans-serif}
+    :where(.md-typescale-headline-small){font:400 24px/32px Roboto,system-ui,sans-serif}
+    :where(.md-typescale-title-large){font:400 22px/28px Roboto,system-ui,sans-serif}
+    :where(.md-typescale-title-medium){font:500 16px/24px Roboto,system-ui,sans-serif;letter-spacing:.15px}
+    :where(.md-typescale-body-large){font:400 16px/24px Roboto,system-ui,sans-serif;letter-spacing:.5px}
+    :where(.md-typescale-body-medium){font:400 14px/20px Roboto,system-ui,sans-serif;letter-spacing:.25px}
+    :where(.md-typescale-label-large){font:500 14px/20px Roboto,system-ui,sans-serif;letter-spacing:.1px}
+    :where(.md-typescale-label-medium){font:500 12px/16px Roboto,system-ui,sans-serif;letter-spacing:.5px}
+
+    /* ================= İskelet ================= */
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: var(--md-sys-color-background);
+      color: var(--md-sys-color-on-surface);
+      font-family: Roboto, system-ui, sans-serif;
+      overflow: hidden;
+      overscroll-behavior: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    /* Metin ve görsel seçimi tamamen kapalı */
+    html, body, * {
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+    img { -webkit-user-drag: none; pointer-events: none; }
+    h1, h2, h3, p, figure, ol { margin: 0; padding: 0; }
+
+    body { opacity: 0; transition: opacity 300ms ease; }
+    body.ready { opacity: 1; }
+
+    #scroller {
+      height: 100vh;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      scroll-snap-type: y mandatory;
+      scrollbar-width: none;
+      overscroll-behavior: contain;
+    }
+    #scroller::-webkit-scrollbar { display: none; }
+
+    .page {
+      box-sizing: border-box;
+      min-height: 100vh;
+      min-height: 100dvh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      overflow-x: clip;
+      display: flex;
+      justify-content: center;
+    }
+    .wrap {
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 520px;
+      padding: calc(32px + env(safe-area-inset-top)) 20px calc(var(--nav-h) + 24px + env(safe-area-inset-bottom));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .muted { color: var(--md-sys-color-on-surface-variant); }
+    .ellipsis { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .card {
+      position: relative;
+      box-sizing: border-box;
+      border-radius: var(--md-sys-shape-corner-extra-large);
+      padding: 20px;
+      --md-elevation-level: 0;
+    }
+    .card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .card-head .grow { flex: 1; min-width: 0; }
+
+    /* ================= 1 · Merhaba (tam genişlik fotoğraf + 3D başlık) ================= */
+    #s0 {
+      position: relative;
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      --ext: var(--md-sys-color-primary);
+    }
+    @media (prefers-color-scheme: dark) {
+      #s0 { --ext: var(--md-sys-color-inverse-primary); }
+      .hero-bg img { filter: brightness(.72) saturate(1.05); }
+    }
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 74%;
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent 94%);
+      mask-image: linear-gradient(to bottom, #000 40%, transparent 94%);
+    }
+    .hero-bg img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 8%;
+      transform: scale(1.08) translate(calc(var(--ry, 0) * -1px), calc(var(--rx, 0) * 1px));
+      transition: transform 120ms linear;
+    }
+    #s0 .wrap { position: relative; justify-content: flex-end; gap: 14px; }
+
+    .title-3d { perspective: 700px; }
+    .tilt-text {
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      transform-origin: 25% 60%;
+      transform: rotateX(calc(var(--rx, 0) * 1deg)) rotateY(calc(var(--ry, 0) * 1deg));
+      animation: sway 6s ease-in-out infinite alternate;
+      text-shadow:
+        1px 1px 0 var(--ext), 2px 2px 0 var(--ext), 3px 3px 0 var(--ext), 4px 4px 0 var(--ext),
+        5px 5px 0 var(--ext), 6px 6px 0 var(--ext), 7px 7px 0 var(--ext), 8px 8px 0 var(--ext),
+        10px 18px 24px color-mix(in srgb, var(--md-sys-color-shadow) 30%, transparent);
+    }
+    #s0.live .tilt-text { animation: none; }
+    @keyframes sway {
+      from { transform: rotateX(3deg) rotateY(-9deg); }
+      to   { transform: rotateX(-3deg) rotateY(9deg); }
+    }
+
+    #s0 p { max-width: 36ch; }
+    #s0 md-chip-set { --md-chip-set-gap: 8px; }
+    #s0 md-assist-chip {
+      --md-assist-chip-label-text-color: var(--md-sys-color-on-primary-container);
+      --md-assist-chip-icon-color: var(--md-sys-color-on-primary-container);
+      --md-assist-chip-outline-color: color-mix(in srgb, var(--md-sys-color-on-primary-container) 35%, transparent);
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+
+    .js .wrap > .rise { opacity: 0; transform: translateY(20px); }
+    .ready #s0 .rise {
+      opacity: 1;
+      transform: none;
+      transition: opacity 600ms var(--md-sys-motion-easing-emphasized-decelerate),
+                  transform 600ms var(--md-sys-motion-easing-emphasized-decelerate);
+      transition-delay: calc(var(--i, 0) * 80ms + 120ms);
+    }
+
+    /* ================= 2 · Ben ================= */
+    #s1 { background: var(--md-sys-color-surface); }
+    .list-card { background: var(--md-sys-color-surface-container-low); padding: 8px; }
+    md-list { --md-list-container-color: transparent; padding: 0; }
+    md-list-item {
+      --md-list-item-leading-icon-color: var(--md-sys-color-primary);
+      --md-list-item-label-text-color: var(--md-sys-color-on-surface);
+    }
+    .story { background: var(--md-sys-color-tertiary-container); color: var(--md-sys-color-on-tertiary-container); }
+    .story .ic { margin-bottom: 8px; }
+    .story p + p { margin-top: 12px; opacity: .85; }
+
+    /* ================= 3 · Yolculuk ================= */
+    #s2 { background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); }
+    .timeline { list-style: none; }
+    .timeline li {
+      position: relative;
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      column-gap: 14px;
+      padding-bottom: 18px;
+    }
+    .timeline li:last-child { padding-bottom: 0; }
+    .timeline li::before {
+      content: "";
+      position: absolute;
+      left: 21px;
+      top: 48px;
+      bottom: 4px;
+      width: 2px;
+      border-radius: 1px;
+      background: color-mix(in srgb, var(--md-sys-color-on-secondary-container) 30%, transparent);
+    }
+    .timeline li:last-child::before { display: none; }
+    .dot {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: var(--md-sys-color-surface);
+      color: var(--md-sys-color-primary);
+    }
+    .dot.warn { background: var(--md-sys-color-error-container); color: var(--md-sys-color-on-error-container); }
+    .dot.ok { background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+    .timeline .when { opacity: .75; }
+    .timeline p { margin-top: 4px; opacity: .9; }
+
+    .js .stagger > * { opacity: 0; transform: translateY(14px); }
+    .stagger.in > * {
+      opacity: 1;
+      transform: none;
+      transition: opacity 450ms var(--md-sys-motion-easing-emphasized-decelerate),
+                  transform 450ms var(--md-sys-motion-easing-emphasized-decelerate);
+      transition-delay: calc(var(--i, 0) * 90ms);
+    }
+
+    /* ================= 4 · Anılar ================= */
+    #s3 { background: var(--md-sys-color-tertiary-container); color: var(--md-sys-color-on-tertiary-container); }
+    .gallery {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+      margin: 0 -20px;
+      padding: 4px 20px 8px;
+      scroll-padding: 0 20px;
+    }
+    .gallery::-webkit-scrollbar { display: none; }
+    .shot {
+      position: relative;
+      flex: none;
+      width: min(72vw, 290px);
+      scroll-snap-align: center;
+      border-radius: 32px;
+      overflow: hidden;
+      background: var(--md-sys-color-surface);
+      color: var(--md-sys-color-on-surface-variant);
+      --md-elevation-level: 1;
+    }
+    .shot img {
+      display: block;
+      width: 100%;
+      height: min(42dvh, 380px);
+      object-fit: cover;
+      background: var(--md-sys-color-surface-container-high);
+    }
+    .shot figcaption { padding: 14px 18px 18px; }
+    .swipe-hint { display: flex; align-items: center; gap: 8px; opacity: .8; }
+
+    /* ================= 5 · Şu an ================= */
+    #s4 { background: var(--md-sys-color-surface); }
+    #s4 .wrap { gap: 14px; }
+
+    .health {
+      background: var(--md-sys-color-inverse-surface);
+      color: var(--md-sys-color-inverse-on-surface);
+    }
+    .health .card-head > md-icon { color: var(--md-sys-color-inverse-primary); }
+    .sync { display: inline-flex; align-items: center; gap: 4px; opacity: .75; }
+    .sync md-icon { font-size: 16px; --md-icon-size: 16px; }
+    .health-body { display: grid; grid-template-columns: 128px 1fr; gap: 18px; align-items: center; }
+    .ring { position: relative; width: 128px; height: 128px; display: grid; place-items: center; }
+    .ring md-circular-progress {
+      --md-circular-progress-size: 128px;
+      --md-circular-progress-active-indicator-width: 9;
+      --md-circular-progress-active-indicator-color: var(--md-sys-color-inverse-primary);
+      --md-circular-progress-track-color: color-mix(in srgb, var(--md-sys-color-inverse-on-surface) 18%, transparent);
+    }
+    .ring-label { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+    .ring-label .unit, .metric .unit { opacity: .7; }
+    .metrics { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+    .metric { display: flex; align-items: center; gap: 12px; }
+    .metric .grow { flex: 1; min-width: 0; }
+    .val { display: flex; align-items: baseline; gap: 6px; }
+    #heart { color: var(--md-sys-color-error-container); font-variation-settings: 'FILL' 1; animation: beat .8s infinite ease-in-out; }
+    .metric > md-icon:not(#heart) { color: var(--md-sys-color-inverse-primary); font-variation-settings: 'FILL' 1; }
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.22); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.12); }
+    }
+    .metric md-linear-progress {
+      margin-top: 6px;
+      width: 100%;
+      --md-linear-progress-active-indicator-color: var(--md-sys-color-inverse-primary);
+      --md-linear-progress-track-color: color-mix(in srgb, var(--md-sys-color-inverse-on-surface) 18%, transparent);
+      --md-linear-progress-track-height: 6px;
+      --md-linear-progress-active-indicator-height: 6px;
+      --md-linear-progress-track-shape: 3px;
+      --md-linear-progress-active-indicator-shape: 3px;
+    }
+    .extra { margin-top: 16px; opacity: .7; }
+
+    .music { background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); }
+    .music .card-head > md-icon { color: var(--md-sys-color-primary); }
+    .track { display: grid; grid-template-columns: 72px 1fr auto; gap: 14px; align-items: center; }
+    .art {
+      width: 72px;
+      height: 72px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--md-sys-color-surface);
+      color: var(--md-sys-color-primary);
+      display: grid;
+      place-items: center;
+    }
+    .art img { width: 100%; height: 100%; object-fit: cover; }
+    .track-text { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+    .status { display: flex; align-items: center; gap: 8px; color: var(--md-sys-color-primary); margin-top: 4px; }
+    .eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 14px; }
+    .eq i { width: 3px; height: 100%; background: var(--md-sys-color-primary); border-radius: 2px; transform-origin: bottom; animation: eq .9s infinite ease-in-out; }
+    .eq i:nth-child(2) { animation-delay: -.3s; }
+    .eq i:nth-child(3) { animation-delay: -.6s; }
+    @keyframes eq { 0%, 100% { transform: scaleY(.25); } 50% { transform: scaleY(1); } }
+    .play { position: relative; width: 56px; height: 56px; display: grid; place-items: center; }
+    .play md-circular-progress {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      --md-circular-progress-size: 56px;
+      --md-circular-progress-active-indicator-width: 8;
+      --md-circular-progress-active-indicator-color: var(--md-sys-color-primary);
+      --md-circular-progress-track-color: color-mix(in srgb, var(--md-sys-color-primary) 18%, transparent);
+    }
+    .play md-filled-icon-button {
+      --md-filled-icon-button-container-width: 44px;
+      --md-filled-icon-button-container-height: 44px;
+      --md-filled-icon-button-icon-size: 26px;
+    }
+    .music md-linear-progress { margin-top: 14px; width: 100%; }
+    .credit { text-align: center; opacity: .6; }
+
+    /* ================= MD3 Navigation Bar (resmî ripple + focus ring ile) ================= */
+    .nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 10;
+      box-sizing: border-box;
+      height: calc(var(--nav-h) + env(safe-area-inset-bottom));
+      padding-bottom: env(safe-area-inset-bottom);
+      display: flex;
+      justify-content: center;
+      background: var(--md-sys-color-surface-container);
+      overflow: hidden;
+      touch-action: none;
+    }
+    .nav-inner { display: flex; width: 100%; max-width: 520px; }
+    .nav-item {
+      position: relative;
+      flex: 1 1 0;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 12px 0 16px;
+      border: 0;
+      background: none;
+      color: var(--md-sys-color-on-surface-variant);
+      font: inherit;
+      cursor: pointer;
+      outline: none;
+      border-radius: 16px;
+      --md-focus-ring-shape: 16px;
+    }
+    .pill {
+      position: relative;
+      width: 64px;
+      height: 32px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      --md-ripple-hover-color: var(--md-sys-color-on-surface);
+      --md-ripple-pressed-color: var(--md-sys-color-on-surface);
+    }
+    .pill::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      background: var(--md-sys-color-secondary-container);
+      transform: scaleX(0);
+      opacity: 0;
+      transition: transform 300ms var(--md-sys-motion-easing-emphasized), opacity 150ms linear;
+    }
+    .pill md-icon { position: relative; }
+    .nav-item.active { color: var(--md-sys-color-on-surface); }
+    .nav-item.active .pill::before { transform: scaleX(1); opacity: 1; }
+    .nav-item.active .pill md-icon { color: var(--md-sys-color-on-secondary-container); font-variation-settings: 'FILL' 1; }
+    .nav-item.active .lbl { font-weight: 700; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+      .js .wrap > .rise, .js .stagger > * { opacity: 1; transform: none; }
+    }
+    @media (max-height: 700px) {
+      .portrait { width: 104px; height: 132px; }
+      #s0 .wrap { gap: 12px; }
+      .hero-actions .secondary { display: none; }
+      .shot img { height: min(38dvh, 300px); }
+    }
+  </style>
+</head>
+<body>
+
+<main id="scroller">
+
+  <!-- 1 · Merhaba -->
+  <section class="page" id="s0" aria-label="Merhaba">
+    <div class="hero-bg" aria-hidden="true">
+      <img src="assets/hero.jpg" alt="" draggable="false">
+    </div>
+    <div class="wrap">
+      <div class="title-3d rise" style="--i:0">
+        <h1 class="tilt-text md-typescale-display-medium">Merhaba,<br>ben Hasan.</h1>
+      </div>
+      <p class="md-typescale-body-large rise" style="--i:1"><span id="age">16</span> yaşındayım. Elektronik, mekanik ve teknolojiyle aram iyi. Bir şeyleri tamir etmeyi, tasarlamayı ve açık kaynak projelere katkı vermeyi seviyorum.</p>
+      <md-chip-set class="rise" style="--i:2" aria-label="İlgi alanlarım">
+        <md-assist-chip label="Elektronik"><md-icon slot="icon">memory</md-icon></md-assist-chip>
+        <md-assist-chip label="Mekanik"><md-icon slot="icon">build</md-icon></md-assist-chip>
+        <md-assist-chip label="Açık kaynak"><md-icon slot="icon">code</md-icon></md-assist-chip>
+        <md-assist-chip label="Mobil tasarım"><md-icon slot="icon">palette</md-icon></md-assist-chip>
+        <md-assist-chip label="Türkçe çeviri"><md-icon slot="icon">translate</md-icon></md-assist-chip>
+      </md-chip-set>
+      <div class="hero-actions rise" style="--i:3">
+        <md-filled-button id="startBtn">
+          Hikâyemi keşfet
+          <md-icon slot="icon">arrow_downward</md-icon>
+        </md-filled-button>
+        <md-outlined-button class="secondary" id="musicBtn">
+          Ne dinliyorum?
+          <md-icon slot="icon">headphones</md-icon>
+        </md-outlined-button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · Ben -->
+  <section class="page" id="s1" aria-label="Ben">
+    <div class="wrap stagger">
+      <h2 class="md-typescale-headline-large" style="--i:0">Biraz benden</h2>
+      <div class="card list-card" style="--i:1">
+        <md-list>
+          <md-list-item>
+            <md-icon slot="start">child_care</md-icon>
+            <div slot="headline">Çukurova Okulu</div>
+            <div slot="supporting-text">Anaokulu, ilkokul ve ortaokul</div>
+          </md-list-item>
+          <md-divider inset></md-divider>
+          <md-list-item>
+            <md-icon slot="start">school</md-icon>
+            <div slot="headline">Mehmet Serttaş Anadolu Lisesi</div>
+            <div slot="supporting-text">Şu an lisede okuyorum</div>
+          </md-list-item>
+          <md-divider inset></md-divider>
+          <md-list-item>
+            <md-icon slot="start">cake</md-icon>
+            <div slot="headline">25 Temmuz 2010</div>
+            <div slot="supporting-text" id="bday">Doğum günüm</div>
+          </md-list-item>
+        </md-list>
+      </div>
+      <div class="card story" style="--i:2">
+        <md-icon class="ic">build_circle</md-icon>
+        <p class="md-typescale-body-large">Küçükken bir gün boyunca bir çalar saati tamir etmeye çalışmışım. Tamir edebildim mi, hatırlamıyorum.</p>
+        <p class="md-typescale-body-large">İlkokulda sınıf başkanıydım. Bir gün öğretmenimiz sınıftan çıkmak zorunda kalınca beni bilgisayarın başına geçirdi. Trackpad'den kaydırma yapmayı bile bilmiyordum.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · Yolculuk -->
+  <section class="page" id="s2" aria-label="Yolculuk">
+    <div class="wrap stagger">
+      <h2 class="md-typescale-headline-large" style="--i:0">Yolculuğum</h2>
+      <ol class="timeline" style="--i:1">
+        <li style="--i:1">
+          <div class="dot"><md-icon>computer</md-icon></div>
+          <div>
+            <h3 class="md-typescale-title-large">Her şey evde başladı</h3>
+            <div class="md-typescale-label-large when">2020 · Pandemi</div>
+            <p class="md-typescale-body-medium">Herkes evlere kapanınca eğitim uzaktan yapılmaya başlandı. Evimize ilk kez bir bilgisayar ve ev interneti geldi. O günden beri teknolojiyle ve insanlara faydalı bir şeyler yapmakla uğraşıyorum.</p>
+          </div>
+        </li>
+        <li style="--i:2">
+          <div class="dot warn"><md-icon>build</md-icon></div>
+          <div>
+            <h3 class="md-typescale-title-large">Laptop bozuldu</h3>
+            <div class="md-typescale-label-large when">2024 başı</div>
+            <p class="md-typescale-body-medium">Anakart arızası yüzünden laptopum sürekli kapanmaya başladı. Defalarca tamire götürdük ama düzelmedi.</p>
+          </div>
+        </li>
+        <li style="--i:3">
+          <div class="dot warn"><md-icon>heart_broken</md-icon></div>
+          <div>
+            <h3 class="md-typescale-title-large">Her şey silindi</h3>
+            <div class="md-typescale-label-large when">2026 başı</div>
+            <p class="md-typescale-body-medium">Tamirden döndüğünde hâlâ bozuktu, üstüne içindeki her şey silinmişti: projelerim, videolarımız ve çocukluk fotoğraflarım. Kuzenlerimden sadece 40-50 fotoğrafı kurtarabildik.</p>
+          </div>
+        </li>
+        <li style="--i:4">
+          <div class="dot ok"><md-icon>cloud_done</md-icon></div>
+          <div>
+            <h3 class="md-typescale-title-large">Yeniden başlıyorum</h3>
+            <div class="md-typescale-label-large when">Şimdi</div>
+            <p class="md-typescale-body-medium">Artık her şeyi yedekliyorum. Bilgisayarım olmadığı için telefondan tasarımlar yapıyor, açık kaynak uygulamalara Türkçe çeviri katkısı veriyorum. Yeni bir bilgisayar için para biriktiriyorum.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 4 · Anılar -->
+  <section class="page" id="s3" aria-label="Anılar">
+    <div class="wrap">
+      <div class="stagger">
+        <h2 class="md-typescale-headline-large" style="--i:0">Elimde kalan anılar</h2>
+        <p class="md-typescale-body-large" style="--i:1; margin-top:8px; opacity:.85">Verilerimi kaybettikten sonra elimde kalan çocukluk karelerinden bazıları.</p>
+      </div>
+      <div class="gallery" aria-label="Fotoğraflar">
+        <figure class="shot">
+          <md-elevation></md-elevation>
+          <img src="assets/kova.jpg" alt="Başında kırmızı bir kovayla gülen küçük Hasan" draggable="false" loading="lazy">
+          <figcaption class="md-typescale-body-medium">Başımda kova, suratımda koca bir gülümseme.</figcaption>
+        </figure>
+        <figure class="shot">
+          <md-elevation></md-elevation>
+          <img src="assets/oyuncak.jpg" alt="Elinde mavi bir oyuncakla poz veren küçük Hasan" draggable="false" loading="lazy">
+          <figcaption class="md-typescale-body-medium">Elimde yine bir şey var: belki bozulmuş, belki tamir edilecek.</figcaption>
+        </figure>
+        <figure class="shot">
+          <md-elevation></md-elevation>
+          <img src="assets/pasta.jpg" alt="Doğum günü pastasının mumlarını üfleyen küçük Hasan" draggable="false" loading="lazy">
+          <figcaption class="md-typescale-body-medium">Doğum günü pastası ve dilek tutma zamanı.</figcaption>
+        </figure>
+      </div>
+      <div class="swipe-hint md-typescale-label-large"><md-icon>swipe</md-icon> Yana kaydır</div>
+    </div>
+  </section>
+
+  <!-- 5 · Şu an -->
+  <section class="page" id="s4" aria-label="Şu an">
+    <div class="wrap">
+      <h2 class="md-typescale-headline-large">Şu an</h2>
+
+      <div class="card health">
+        <div class="card-head">
+          <md-icon>monitor_heart</md-icon>
+          <span class="md-typescale-title-medium grow">Sağlık</span>
+          <span class="sync md-typescale-label-medium"><md-icon>sync</md-icon><span id="syncTxt">az önce</span></span>
+        </div>
+        <div class="health-body">
+          <div class="ring">
+            <md-circular-progress id="stepRing" value="0" max="1" aria-label="Günlük adım hedefi"></md-circular-progress>
+            <div class="ring-label">
+              <div id="steps" class="md-typescale-headline-small">0</div>
+              <div class="md-typescale-label-medium unit">adım</div>
+            </div>
+          </div>
+          <div class="metrics">
+            <div class="metric">
+              <md-icon id="heart">favorite</md-icon>
+              <div class="val">
+                <span id="bpm" class="md-typescale-headline-small">74</span>
+                <span class="md-typescale-label-medium unit">bpm</span>
+              </div>
+            </div>
+            <div class="metric">
+              <md-icon>bedtime</md-icon>
+              <div class="grow">
+                <div class="val"><span id="sleep" class="md-typescale-title-large">6 sa 40 dk</span></div>
+                <md-linear-progress id="sleepBar" value="0.8" max="1" aria-label="Uyku hedefi"></md-linear-progress>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="extra md-typescale-label-medium" id="extra"></div>
+      </div>
+
+      <div class="card music">
+        <div class="card-head">
+          <md-icon>headphones</md-icon>
+          <span class="md-typescale-title-medium">Hasan ne dinliyor?</span>
+        </div>
+        <div class="track">
+          <div class="art">
+            <img id="art" alt="" hidden draggable="false">
+            <md-icon id="artIcon">music_note</md-icon>
+          </div>
+          <div class="track-text">
+            <div id="trackName" class="md-typescale-title-medium ellipsis">Yükleniyor</div>
+            <div id="trackArtist" class="md-typescale-body-medium ellipsis" style="opacity:.8">&nbsp;</div>
+            <div class="status md-typescale-label-medium">
+              <span class="eq" id="eq" hidden><i></i><i></i><i></i></span>
+              <span id="trackStatus"></span>
+            </div>
+          </div>
+          <div class="play">
+            <md-circular-progress id="prevRing" value="0" max="1" aria-hidden="true"></md-circular-progress>
+            <md-filled-icon-button id="playBtn" disabled aria-label="Önizleme aranıyor">
+              <md-icon id="playIcon">play_arrow</md-icon>
+            </md-filled-icon-button>
+          </div>
+        </div>
+        <md-linear-progress id="musicLoad" indeterminate></md-linear-progress>
+      </div>
+
+      <p class="credit md-typescale-label-medium">© <span id="year">2026</span> Hasan</p>
+    </div>
+  </section>
+
+</main>
+
+<nav class="nav" aria-label="Bölümler">
+  <div class="nav-inner">
+    <button class="nav-item active" aria-label="Merhaba" aria-current="page">
+      <span class="pill"><md-ripple></md-ripple><md-icon>home</md-icon></span>
+      <span class="lbl md-typescale-label-medium">Merhaba</span>
+      <md-focus-ring></md-focus-ring>
+    </button>
+    <button class="nav-item" aria-label="Ben">
+      <span class="pill"><md-ripple></md-ripple><md-icon>person</md-icon></span>
+      <span class="lbl md-typescale-label-medium">Ben</span>
+      <md-focus-ring></md-focus-ring>
+    </button>
+    <button class="nav-item" aria-label="Yolculuk">
+      <span class="pill"><md-ripple></md-ripple><md-icon>route</md-icon></span>
+      <span class="lbl md-typescale-label-medium">Yolculuk</span>
+      <md-focus-ring></md-focus-ring>
+    </button>
+    <button class="nav-item" aria-label="Anılar">
+      <span class="pill"><md-ripple></md-ripple><md-icon>photo_library</md-icon></span>
+      <span class="lbl md-typescale-label-medium">Anılar</span>
+      <md-focus-ring></md-focus-ring>
+    </button>
+    <button class="nav-item" aria-label="Şu an">
+      <span class="pill"><md-ripple></md-ripple><md-icon>bolt</md-icon></span>
+      <span class="lbl md-typescale-label-medium">Şu an</span>
+      <md-focus-ring></md-focus-ring>
+    </button>
+  </div>
+</nav>
+
+<script>
+(() => {
+  'use strict';
+
+  /* Seçim, sürükleme ve bağlam menüsü engeli */
+  ['contextmenu', 'selectstart', 'dragstart', 'copy', 'cut'].forEach(type =>
+    document.addEventListener(type, e => e.preventDefault())
+  );
+
+  const $ = id => document.getElementById(id);
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const trNum = new Intl.NumberFormat('tr-TR');
+
+  /* ---------- Yaş ve doğum günü sayacı ---------- */
+  const BIRTH = { y: 2010, m: 6, d: 25 };
+  function updateAge() {
+    const now = new Date();
+    let age = now.getFullYear() - BIRTH.y;
+    const had = now.getMonth() > BIRTH.m || (now.getMonth() === BIRTH.m && now.getDate() >= BIRTH.d);
+    if (!had) age--;
+    $('age').textContent = age;
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    let next = new Date(now.getFullYear(), BIRTH.m, BIRTH.d);
+    if (next < today) next = new Date(now.getFullYear() + 1, BIRTH.m, BIRTH.d);
+    const days = Math.round((next - today) / 86400000);
+    $('bday').textContent = days === 0
+      ? 'Bugün doğum günüm!'
+      : `${next.getFullYear() - BIRTH.y}. yaş günüme ${days} gün kaldı`;
+    $('year').textContent = now.getFullYear();
+  }
+  updateAge();
+
+  /* ---------- Bölümler ve gezinme ---------- */
+  const scroller = $('scroller');
+  const sections = [...document.querySelectorAll('.page')];
+  const navItems = [...document.querySelectorAll('.nav-item')];
+  let navLock = false, lockTimer;
+
+  function setActive(i) {
+    navItems.forEach((b, j) => {
+      b.classList.toggle('active', i === j);
+      if (i === j) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+    });
+  }
+  function goTo(i) {
+    navLock = true;
+    setActive(i);
+    clearTimeout(lockTimer);
+    sections[i].scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    lockTimer = setTimeout(() => {
+      navLock = false;
+      setActive(Math.round(scroller.scrollTop / scroller.clientHeight));
+    }, reduceMotion ? 50 : 900);
+  }
+  navItems.forEach((b, i) => b.addEventListener('click', () => goTo(i)));
+  $('startBtn').addEventListener('click', () => goTo(1));
+  $('musicBtn').addEventListener('click', () => goTo(4));
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.querySelectorAll('.stagger').forEach(el => el.classList.add('in'));
+      if (entry.target.classList.contains('stagger')) entry.target.classList.add('in');
+      if (!navLock) setActive(sections.indexOf(entry.target));
+    });
+  }, { root: scroller, threshold: 0.55 });
+  sections.forEach(s => io.observe(s));
+
+  /* ---------- Sağlık verileri ---------- */
+  function mulberry32(a) {
+    return () => {
+      a |= 0; a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  const dayNum = () => { const d = new Date(); return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); };
+  // Gün 06:30'da başlar, 22:30'da biter; arası 15 dakikalık dilimlere bölünür.
+  // 00:00-06:30 arası adım 0, 22:30'dan sonra gün sonu toplamı sabit kalır.
+  const DAY_START = 6 * 60 + 30, DAY_END = 22 * 60 + 30, SLOT = 15;
+  const SLOTS = (DAY_END - DAY_START) / SLOT;   // 64 dilim
+  // Saate göre hareket yoğunluğu (okul yolu, teneffüs, akşam dışarısı...)
+  const HOUR_WEIGHTS = {
+    6: 0.4, 7: 1.2, 8: 3, 9: 1.5, 10: 1, 11: 1, 12: 1.5, 13: 1, 14: 1,
+    15: 1.5, 16: 3, 17: 2.5, 18: 2, 19: 1.5, 20: 1, 21: 0.6, 22: 0.3
+  };
+
+  function buildDay() {
+    const seed = dayNum();
+    const r = mulberry32(seed * 31 + 7);
+    const total = 5200 + Math.floor(r() * 6800);             // günün toplamı: 5.200 - 12.000
+    const cum = [0];                                         // dilim dilim birikimli ağırlık
+    for (let i = 0; i < SLOTS; i++) {
+      const hour = Math.floor((DAY_START + i * SLOT) / 60);
+      cum.push(cum[i] + HOUR_WEIGHTS[hour] * (0.5 + r()));
+    }
+    const sleepMin = 360 + Math.round(mulberry32(seed * 17 + 3)() * 140 / 5) * 5;
+    return { seed, total, cum, sleepMin };
+  }
+  let day = buildDay();
+
+  // Adım sadece biten 15 dakikalık dilimlerde artar; sayfa açıkken sürekli akmaz.
+  function stepsNow(now) {
+    if (day.seed !== dayNum()) { day = buildDay(); showSleep(); }
+    const mins = now.getHours() * 60 + now.getMinutes();
+    const done = Math.max(0, Math.min(SLOTS, Math.floor((mins - DAY_START) / SLOT)));
+    return Math.round(day.total * day.cum[done] / day.cum[SLOTS]);
+  }
+
+  // Saatlere göre yavaşça değişen taban nabız (gece düşük, gündüz orta, akşam biraz yüksek)
+  const HR_BASE = [58, 57, 57, 56, 56, 57, 60, 68, 74, 77, 77, 78, 79, 78, 77, 78, 81, 82, 82, 78, 76, 73, 68, 62];
+  function bpmTarget(t) {
+    const d = new Date(t);
+    const h = d.getHours();
+    const f = d.getMinutes() / 60 + d.getSeconds() / 3600;
+    const base = HR_BASE[h] + (HR_BASE[(h + 1) % 24] - HR_BASE[h]) * f;
+    // dakikalara yayılmış yumuşak dalgalanma: ±3 bpm
+    const k = t / 60000, i = Math.floor(k), x = k - i, sm = x * x * (3 - 2 * x);
+    const n0 = mulberry32(i * 7919 + 13)(), n1 = mulberry32((i + 1) * 7919 + 13)();
+    const wobble = (n0 + (n1 - n0) * sm - 0.5) * 6;
+    const personal = (mulberry32(dayNum() * 5 + 1)() - 0.5) * 6;   // günün genel seviyesi: ±3
+    return base + personal + wobble;
+  }
+  function showSleep() {
+    const m = day.sleepMin;
+    $('sleep').textContent = `${Math.floor(m / 60)} sa ${m % 60} dk`;
+    $('sleepBar').value = Math.min(1, m / 480);
+  }
+
+  let shownSteps = -1, shownBpm = -1, lastSlot = -1, lastBpmStep = 0;
+  function tickHealth() {
+    const now = new Date();
+    const steps = stepsNow(now);
+    if (steps !== shownSteps) {
+      shownSteps = steps;
+      $('steps').textContent = trNum.format(steps);
+      $('stepRing').value = Math.min(1, steps / 10000);
+      const km = (steps * 0.00072).toFixed(1).replace('.', ',');
+      $('extra').textContent = `${km} km · ${Math.round(steps * 0.04)} kcal · hedef 10.000 adım`;
+    }
+    // Nabız hedefe en fazla 5 saniyede 1 bpm yaklaşır: ani sıçrama olmaz
+    const target = Math.round(bpmTarget(now.getTime()));
+    let changed = false;
+    if (shownBpm < 0) { shownBpm = target; changed = true; }
+    else if (now - lastBpmStep > 5000 && target !== shownBpm) {
+      shownBpm += Math.sign(target - shownBpm);
+      lastBpmStep = now;
+      changed = true;
+    }
+    if (changed) {
+      $('bpm').textContent = shownBpm;
+      $('heart').style.animationDuration = (60 / shownBpm).toFixed(2) + 's';
+    }
+    const slot = Math.floor(now.getTime() / 30000);
+    if (slot !== lastSlot) {
+      lastSlot = slot;
+      $('syncTxt').textContent = 'az önce';
+      setTimeout(() => { $('syncTxt').textContent = '30 sn önce'; }, 15000);
+    }
+  }
+  showSleep();
+  tickHealth();
+  setInterval(tickHealth, 1000);
+
+  /* ---------- Last.fm + iTunes 30 sn önizleme ---------- */
+  const LASTFM = { user: 'hasanbkaylan', key: 'd86f4c4cfa034a289293c509e4248503' };
+  const PLACEHOLDER = '2a96cbd8b46e442fc41c2b86b821562f';
+  const APPLE_URL = /^https:\/\/[a-z0-9.-]+\.(apple\.com|mzstatic\.com)\//i;
+
+  const audio = new Audio();
+  audio.preload = 'none';
+  const playBtn = $('playBtn'), playIcon = $('playIcon'), prevRing = $('prevRing');
+  let currentKey = '', preview = null, loadedUrl = '';
+  const previewCache = new Map();
+
+  function ago(uts) {
+    const s = Math.max(0, Math.floor(Date.now() / 1000 - uts));
+    if (s < 90) return 'az önce';
+    if (s < 3600) return `${Math.round(s / 60)} dk önce`;
+    if (s < 86400) return `${Math.round(s / 3600)} sa önce`;
+    return `${Math.round(s / 86400)} gün önce`;
+  }
+
+  // Şarkı/sanatçı adlarını karşılaştırmak için sadeleştir
+  function norm(s) {
+    return (s || '').toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/ı/g, 'i')
+      .replace(/\(.*?\)|\[.*?\]/g, ' ')
+      .replace(/[^a-z0-9 ]/g, ' ')
+      .replace(/\s+/g, ' ').trim();
+  }
+  function jsonp(url) {
+    return new Promise((resolve, reject) => {
+      const cb = 'itunes_cb_' + Date.now();
+      const el = document.createElement('script');
+      const done = () => { clearTimeout(timer); delete window[cb]; el.remove(); };
+      const timer = setTimeout(() => { done(); reject(new Error('zaman aşımı')); }, 8000);
+      window[cb] = data => { done(); resolve(data.results || []); };
+      el.onerror = () => { done(); reject(new Error('jsonp')); };
+      el.src = url + '&callback=' + cb;
+      document.head.appendChild(el);
+    });
+  }
+  async function itunes(term, country) {
+    const url = 'https://itunes.apple.com/search?' + new URLSearchParams({
+      term, media: 'music', entity: 'song', limit: '10', country
+    });
+    try {
+      const res = await fetch(url);
+      return (await res.json()).results || [];
+    } catch (e) {
+      return jsonp(url);
+    }
+  }
+  function pick(results, name, artist) {
+    const n = norm(name);
+    const a = norm(artist.split(/,|&| feat/i)[0]);
+    let best = null, bestScore = 0;
+    for (const r of results) {
+      if (!r.previewUrl || !APPLE_URL.test(r.previewUrl)) continue;
+      const rn = norm(r.trackName), ra = norm(r.artistName);
+      let sc = 0;
+      if (rn === n) sc += 3; else if (rn && n && (rn.includes(n) || n.includes(rn))) sc += 2;
+      if (a && ra && (ra.includes(a) || a.includes(ra))) sc += 3;
+      if (sc > bestScore) { bestScore = sc; best = r; }
+    }
+    return bestScore >= 5 ? best : null;
+  }
+  async function findPreview(name, artist) {
+    const key = artist + '|' + name;
+    if (previewCache.has(key)) return previewCache.get(key);
+    let found = null;
+    for (const country of ['TR', 'US']) {
+      try {
+        found = pick(await itunes(`${artist} ${name}`, country), name, artist);
+        if (found) break;
+      } catch (e) { /* bir sonraki mağazayı dene */ }
+    }
+    previewCache.set(key, found);
+    return found;
+  }
+  function artOf(found) {
+    const u = found && found.artworkUrl100 ? found.artworkUrl100.replace('100x100bb', '600x600bb') : '';
+    return APPLE_URL.test(u) ? u : '';
+  }
+
+  function stopPreview() {
+    audio.pause();
+    audio.removeAttribute('src');
+    audio.load();
+    loadedUrl = '';
+    prevRing.value = 0;
+    playIcon.textContent = 'play_arrow';
+  }
+  function setTrack({ name, artist, status, playing, art }) {
+    $('trackName').textContent = name;
+    $('trackArtist').textContent = artist || '\u00a0';
+    $('trackStatus').textContent = status;
+    $('eq').hidden = !playing;
+    const img = $('art');
+    if (art) { if (img.src !== art) img.src = art; img.hidden = false; $('artIcon').hidden = true; }
+    else { img.hidden = true; $('artIcon').hidden = false; }
+  }
+  async function attachPreview(name, artist) {
+    const key = artist + '|' + name;
+    if (key === currentKey) return;
+    currentKey = key;
+    preview = null;
+    stopPreview();
+    playBtn.disabled = true;
+    playBtn.setAttribute('aria-label', 'Önizleme aranıyor');
+    const found = await findPreview(name, artist);
+    if (key !== currentKey) return;
+    if (found) {
+      preview = { url: found.previewUrl };
+      playBtn.disabled = false;
+      playBtn.setAttribute('aria-label', '30 saniyelik önizlemeyi çal');
+      const art = artOf(found);
+      if (art) { $('art').src = art; $('art').hidden = false; $('artIcon').hidden = true; }
+    } else {
+      playBtn.setAttribute('aria-label', 'Bu şarkı için önizleme bulunamadı');
+    }
+  }
+
+  playBtn.addEventListener('click', () => {
+    if (!preview) return;
+    if (!audio.paused) { audio.pause(); return; }
+    if (loadedUrl !== preview.url) { audio.src = preview.url; loadedUrl = preview.url; }
+    audio.play().catch(() => {});
+  });
+  audio.addEventListener('play', () => {
+    playIcon.textContent = 'pause';
+    playBtn.setAttribute('aria-label', 'Önizlemeyi duraklat');
+  });
+  audio.addEventListener('pause', () => {
+    playIcon.textContent = 'play_arrow';
+    if (preview) playBtn.setAttribute('aria-label', '30 saniyelik önizlemeyi çal');
+  });
+  audio.addEventListener('ended', () => { prevRing.value = 0; });
+  audio.addEventListener('timeupdate', () => {
+    prevRing.value = Math.min(1, audio.currentTime / (audio.duration || 30));
+  });
+
+  async function loadMusic() {
+    try {
+      const q = new URLSearchParams({
+        method: 'user.getrecenttracks', user: LASTFM.user, api_key: LASTFM.key, format: 'json', limit: '1'
+      });
+      const res = await fetch('https://ws.audioscrobbler.com/2.0/?' + q, { cache: 'no-store' });
+      const json = await res.json();
+      if (json.error) throw new Error(json.message);
+      let t = json.recenttracks && json.recenttracks.track;
+      if (Array.isArray(t)) t = t[0];
+      if (!t) { setTrack({ name: 'Henüz şarkı yok', artist: '', status: '', playing: false }); return; }
+      const playing = !!(t['@attr'] && t['@attr'].nowplaying === 'true');
+      const artist = (t.artist && (t.artist['#text'] || t.artist.name)) || '';
+      const imgs = t.image || [];
+      const big = (imgs.find(i => i.size === 'extralarge') || imgs[imgs.length - 1] || {})['#text'];
+      const lfmArt = big && big.startsWith('https://') && !big.includes(PLACEHOLDER) ? big : '';
+      const itArt = artOf(previewCache.get(artist + '|' + t.name));
+      setTrack({
+        name: t.name,
+        artist,
+        status: playing ? 'Şu an çalıyor' : (t.date ? ago(t.date.uts) : ''),
+        playing,
+        art: itArt || lfmArt
+      });
+      attachPreview(t.name, artist);
+    } catch (err) {
+      setTrack({ name: 'Müzik bilgisi alınamadı', artist: 'Biraz sonra tekrar denenecek', status: '', playing: false });
+    } finally {
+      $('musicLoad').hidden = true;
+    }
+  }
+  loadMusic();
+  setInterval(() => { if (!document.hidden) loadMusic(); }, 20000);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) audio.pause(); else loadMusic();
+  });
+
+  /* ---------- Hero 3D eğimi (fare ve telefon sensörü) ---------- */
+  const hero = $('s0');
+  if (!reduceMotion) {
+    let cx = 0, cy = 0, tx = 0, ty = 0, raf = 0;
+    const apply = () => {
+      cx += (tx - cx) * 0.12;
+      cy += (ty - cy) * 0.12;
+      hero.style.setProperty('--rx', cx.toFixed(2));
+      hero.style.setProperty('--ry', cy.toFixed(2));
+      raf = (Math.abs(tx - cx) > 0.02 || Math.abs(ty - cy) > 0.02) ? requestAnimationFrame(apply) : 0;
+    };
+    const aim = (rx, ry) => {
+      hero.classList.add('live');
+      tx = rx; ty = ry;
+      if (!raf) raf = requestAnimationFrame(apply);
+    };
+    const clamp = (v, m) => Math.max(-m, Math.min(m, v));
+    hero.addEventListener('pointermove', e => {
+      if (e.pointerType === 'touch') return;
+      const r = hero.getBoundingClientRect();
+      aim(-((e.clientY - r.top) / r.height - 0.5) * 12, ((e.clientX - r.left) / r.width - 0.5) * 20);
+    });
+    window.addEventListener('deviceorientation', e => {
+      if (e.gamma == null || e.beta == null) return;
+      aim(clamp((e.beta - 55) * 0.25, 8), clamp(e.gamma * 0.5, 14));
+    });
+  }
+
+  /* ---------- Açılış + CDN yedeği ---------- */
+  const start = () => {
+    document.body.classList.add('ready');
+    document.querySelectorAll('#s0 .rise').forEach(() => {});
+  };
+  const loaded = Promise.all([customElements.whenDefined('md-ripple'), document.fonts.ready]);
+  const timeout = new Promise(r => setTimeout(r, 3000));
+  Promise.race([loaded, timeout]).then(async () => {
+    // esm.run ulaşılamazsa resmî paketi başka bir CDN'den yükle
+    if (!customElements.get('md-ripple')) {
+      try { await import('https://esm.sh/@material/web@2.3.0/all.js'); } catch (e) { console.warn(e); }
+    }
+    start();
+  });
+})();
+</script>
+</body>
+</html>
