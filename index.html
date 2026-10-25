@@ -79,6 +79,7 @@
       --md-sys-motion-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
 
       --nav-h: 80px;
+      --rail-w: 0px;
       color-scheme: light dark;
     }
     @media (prefers-color-scheme: dark) {
@@ -168,6 +169,7 @@
 
     .page {
       box-sizing: border-box;
+      padding-left: var(--rail-w);
       min-height: 100vh;
       min-height: 100dvh;
       scroll-snap-align: start;
@@ -180,7 +182,8 @@
       box-sizing: border-box;
       width: 100%;
       max-width: 520px;
-      padding: calc(32px + env(safe-area-inset-top)) 20px calc(var(--nav-h) + 24px + env(safe-area-inset-bottom));
+      --pad: 20px;
+      padding: calc(64px + env(safe-area-inset-top)) var(--pad) calc(var(--nav-h) + 24px + env(safe-area-inset-bottom));
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -214,7 +217,7 @@
     .hero-bg {
       position: absolute;
       top: 0;
-      left: 0;
+      left: var(--rail-w);
       right: 0;
       height: 74%;
       overflow: hidden;
@@ -335,9 +338,9 @@
       scroll-snap-type: x mandatory;
       overscroll-behavior-x: contain;
       scrollbar-width: none;
-      margin: 0 -20px;
-      padding: 4px 20px 8px;
-      scroll-padding: 0 20px;
+      margin: 0 calc(var(--pad) * -1);
+      padding: 4px var(--pad) 8px;
+      scroll-padding: 0 var(--pad);
     }
     .gallery::-webkit-scrollbar { display: none; }
     .shot {
@@ -517,36 +520,190 @@
       .hero-actions .secondary { display: none; }
       .shot img { height: min(38dvh, 300px); }
     }
+
+    /* ================= Sağ üst eylem grubu (GitHub · İletişim · Dil) ================= */
+    .top-actions {
+      position: fixed;
+      top: calc(10px + env(safe-area-inset-top));
+      right: calc(10px + env(safe-area-inset-right));
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding: 4px;
+      border-radius: 28px;
+      isolation: isolate;
+    }
+    /* Blur ayrı bir katmanda: üst öğeye filtre uygulanırsa menülerin konumlanması bozulur */
+    .top-actions::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      border-radius: inherit;
+      background: color-mix(in srgb, var(--md-sys-color-surface-container) 74%, transparent);
+      -webkit-backdrop-filter: blur(14px) saturate(1.4);
+      backdrop-filter: blur(14px) saturate(1.4);
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--md-sys-color-outline-variant) 70%, transparent),
+                  0 2px 10px color-mix(in srgb, var(--md-sys-color-shadow) 14%, transparent);
+    }
+    .top-actions md-icon-button {
+      --md-icon-button-icon-color: var(--md-sys-color-on-surface-variant);
+      --md-icon-button-hover-icon-color: var(--md-sys-color-on-surface);
+      --md-icon-button-focus-icon-color: var(--md-sys-color-on-surface);
+      --md-icon-button-pressed-icon-color: var(--md-sys-color-on-surface);
+    }
+    .gh-icon { display: block; width: 24px; height: 24px; fill: currentColor; }
+    md-menu {
+      --md-menu-container-color: var(--md-sys-color-surface-container);
+      --md-menu-item-leading-icon-color: var(--md-sys-color-primary);
+    }
+    md-menu-item { --md-menu-item-trailing-icon-color: var(--md-sys-color-primary); }
+    .flag { display: grid; place-items: center; }
+    .flag svg {
+      display: block;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--md-sys-color-outline) 45%, transparent);
+    }
+    md-menu-item .check { visibility: hidden; }
+    md-menu-item[selected] .check { visibility: visible; }
+
+    /* ================= Geniş ekran + yatay telefon: Navigation Rail ================= */
+    @media (min-width: 840px), (orientation: landscape) and (max-height: 500px) {
+      :root {
+        --nav-h: 0px;
+        --rail-w: calc(80px + env(safe-area-inset-left));
+      }
+      .nav {
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: auto;
+        width: var(--rail-w);
+        height: auto;
+        padding: 0 0 0 env(safe-area-inset-left);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: var(--md-sys-color-surface);
+        box-shadow: 1px 0 0 color-mix(in srgb, var(--md-sys-color-outline-variant) 55%, transparent);
+      }
+      .nav-inner {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        width: 80px;
+        max-width: none;
+      }
+      .nav-item { flex: none; width: 80px; padding: 4px 0; gap: 4px; }
+      .pill { width: 56px; }
+    }
+    @media (max-height: 560px) {
+      .nav-inner { gap: 2px; }
+      .nav-item { padding: 2px 0; gap: 2px; }
+    }
+
+    /* ================= Masaüstü + geniş yatay: 880px içerik, 2 kolonlu ızgara ================= */
+    @media (min-width: 840px), (orientation: landscape) and (max-height: 500px) and (min-width: 640px) {
+      .wrap { max-width: 880px; --pad: 32px; }
+      .wrap.grid2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px 20px;
+        align-content: center;
+        align-items: start;
+      }
+      .wrap.grid2 > .span-all { grid-column: 1 / -1; }
+      .timeline { max-width: 680px; }
+    }
+
+    /* ================= Kısa ekranlar: serbest, doğal kaydırma ================= */
+    @media (max-height: 600px) {
+      #scroller { scroll-snap-type: none; }
+      .page { min-height: auto; scroll-snap-stop: normal; }
+    }
   </style>
 </head>
 <body>
 
+<!-- Sağ üst: GitHub · İletişim · Dil -->
+<div class="top-actions" role="toolbar" aria-label="Hızlı eylemler" data-i18n-attr="aria-label:topActions">
+  <md-icon-button href="https://github.com/hasanbkaylan" target="_blank" aria-label="GitHub">
+    <svg class="gh-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.921.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+  </md-icon-button>
+
+  <md-icon-button id="contactBtn" aria-label="İletişim" data-i18n-attr="aria-label:topContact">
+    <md-icon>forum</md-icon>
+  </md-icon-button>
+  <md-menu id="contactMenu" anchor="contactBtn" positioning="popover" anchor-corner="end-end" menu-corner="start-end">
+    <md-menu-item href="mailto:hasanberatkaylan@gmail.com">
+      <md-icon slot="start">mail</md-icon>
+      <div slot="headline" data-i18n="mailLbl">E-posta</div>
+      <div slot="supporting-text">hasanberatkaylan@gmail.com</div>
+    </md-menu-item>
+    <md-menu-item href="https://t.me/hbkaylan" target="_blank">
+      <span slot="start" class="flag"><svg class="gh-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></span>
+      <div slot="headline">Telegram</div>
+      <div slot="supporting-text">@hbkaylan</div>
+    </md-menu-item>
+    <md-menu-item href="tel:+905518912600">
+      <md-icon slot="start">call</md-icon>
+      <div slot="headline" data-i18n="telLbl">Telefon</div>
+      <div slot="supporting-text">+90 551 891 26 00</div>
+    </md-menu-item>
+  </md-menu>
+
+  <md-icon-button id="langBtn" aria-label="Dil" data-i18n-attr="aria-label:topLang">
+    <md-icon>translate</md-icon>
+  </md-icon-button>
+  <md-menu id="langMenu" anchor="langBtn" positioning="popover" anchor-corner="end-end" menu-corner="start-end">
+    <md-menu-item data-lang="tr">
+      <span slot="start" class="flag"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" fill="#E30A17"/><circle cx="9.4" cy="12" r="5" fill="#fff"/><circle cx="10.8" cy="12" r="4.1" fill="#E30A17"/><polygon fill="#fff" points="16.7,12 15.08,12.56 15.04,14.28 14,12.91 12.36,13.41 13.34,12 12.36,10.59 14,11.09 15.04,9.72 15.08,11.44"/></svg></span>
+      <div slot="headline">Türkçe</div>
+      <md-icon slot="end" class="check">check</md-icon>
+    </md-menu-item>
+    <md-menu-item data-lang="en">
+      <span slot="start" class="flag"><svg viewBox="15 0 30 30" aria-hidden="true"><rect x="0" width="60" height="30" fill="#012169"/><path d="M0,0 60,30M60,0 0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 60,30M60,0 0,30" stroke="#C8102E" stroke-width="2"/><path d="M30,0v30M0,15h60" stroke="#fff" stroke-width="10"/><path d="M30,0v30M0,15h60" stroke="#C8102E" stroke-width="6"/></svg></span>
+      <div slot="headline">English</div>
+      <md-icon slot="end" class="check">check</md-icon>
+    </md-menu-item>
+    <md-menu-item data-lang="de">
+      <span slot="start" class="flag"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="8" fill="#000"/><rect y="8" width="24" height="8" fill="#DD0000"/><rect y="16" width="24" height="8" fill="#FFCE00"/></svg></span>
+      <div slot="headline">Deutsch</div>
+      <md-icon slot="end" class="check">check</md-icon>
+    </md-menu-item>
+  </md-menu>
+</div>
+
 <main id="scroller">
 
   <!-- 1 · Merhaba -->
-  <section class="page" id="s0" aria-label="Merhaba">
+  <section class="page" id="s0" aria-label="Merhaba" data-i18n-attr="aria-label:navHome">
     <div class="hero-bg" aria-hidden="true">
       <img src="assets/hero.jpg" alt="" draggable="false">
     </div>
     <div class="wrap">
       <div class="title-3d rise" style="--i:0">
-        <h1 class="tilt-text md-typescale-display-medium">Merhaba,<br>ben Hasan.</h1>
+        <h1 class="tilt-text md-typescale-display-medium" data-i18n-html="heroTitle">Merhaba,<br>ben Hasan.</h1>
       </div>
-      <p class="md-typescale-body-large rise" style="--i:1"><span id="age">16</span> yaşındayım. Elektronik, mekanik ve teknolojiyle aram iyi. Bir şeyleri tamir etmeyi, tasarlamayı ve açık kaynak projelere katkı vermeyi seviyorum.</p>
-      <md-chip-set class="rise" style="--i:2" aria-label="İlgi alanlarım">
-        <md-assist-chip label="Elektronik"><md-icon slot="icon">memory</md-icon></md-assist-chip>
-        <md-assist-chip label="Mekanik"><md-icon slot="icon">build</md-icon></md-assist-chip>
-        <md-assist-chip label="Açık kaynak"><md-icon slot="icon">code</md-icon></md-assist-chip>
-        <md-assist-chip label="Mobil tasarım"><md-icon slot="icon">palette</md-icon></md-assist-chip>
-        <md-assist-chip label="Türkçe çeviri"><md-icon slot="icon">translate</md-icon></md-assist-chip>
+      <p class="md-typescale-body-large rise" style="--i:1" data-i18n="heroIntro">16 yaşındayım. Elektronik, mekanik ve teknolojiyle aram iyi. Bir şeyleri tamir etmeyi, tasarlamayı ve açık kaynak projelere katkı vermeyi seviyorum.</p>
+      <md-chip-set class="rise" style="--i:2" aria-label="İlgi alanlarım" data-i18n-attr="aria-label:chipsLabel">
+        <md-assist-chip label="Elektronik" data-i18n-attr="label:chipElec"><md-icon slot="icon">memory</md-icon></md-assist-chip>
+        <md-assist-chip label="Mekanik" data-i18n-attr="label:chipMech"><md-icon slot="icon">build</md-icon></md-assist-chip>
+        <md-assist-chip label="Açık kaynak" data-i18n-attr="label:chipOss"><md-icon slot="icon">code</md-icon></md-assist-chip>
+        <md-assist-chip label="Mobil tasarım" data-i18n-attr="label:chipDesign"><md-icon slot="icon">palette</md-icon></md-assist-chip>
+        <md-assist-chip label="Türkçe çeviri" data-i18n-attr="label:chipTr"><md-icon slot="icon">translate</md-icon></md-assist-chip>
       </md-chip-set>
       <div class="hero-actions rise" style="--i:3">
         <md-filled-button id="startBtn">
-          Hikâyemi keşfet
+          <span data-i18n="btnStart">Hikâyemi keşfet</span>
           <md-icon slot="icon">arrow_downward</md-icon>
         </md-filled-button>
         <md-outlined-button class="secondary" id="musicBtn">
-          Ne dinliyorum?
+          <span data-i18n="btnMusic">Ne dinliyorum?</span>
           <md-icon slot="icon">headphones</md-icon>
         </md-outlined-button>
       </div>
@@ -554,73 +711,73 @@
   </section>
 
   <!-- 2 · Ben -->
-  <section class="page" id="s1" aria-label="Ben">
-    <div class="wrap stagger">
-      <h2 class="md-typescale-headline-large" style="--i:0">Biraz benden</h2>
+  <section class="page" id="s1" aria-label="Ben" data-i18n-attr="aria-label:navAbout">
+    <div class="wrap grid2 stagger">
+      <h2 class="md-typescale-headline-large span-all" style="--i:0" data-i18n="aboutTitle">Biraz benden</h2>
       <div class="card list-card" style="--i:1">
         <md-list>
           <md-list-item>
             <md-icon slot="start">child_care</md-icon>
             <div slot="headline">Çukurova Okulu</div>
-            <div slot="supporting-text">Anaokulu, ilkokul ve ortaokul</div>
+            <div slot="supporting-text" data-i18n="schoolKinderSub">Anaokulu, ilkokul ve ortaokul</div>
           </md-list-item>
           <md-divider inset></md-divider>
           <md-list-item>
             <md-icon slot="start">school</md-icon>
             <div slot="headline">Mehmet Serttaş Anadolu Lisesi</div>
-            <div slot="supporting-text">Şu an lisede okuyorum</div>
+            <div slot="supporting-text" data-i18n="highSub">Şu an lisede okuyorum</div>
           </md-list-item>
           <md-divider inset></md-divider>
           <md-list-item>
             <md-icon slot="start">cake</md-icon>
-            <div slot="headline">25 Temmuz 2010</div>
+            <div slot="headline" data-i18n="bdayDate">25 Temmuz 2010</div>
             <div slot="supporting-text" id="bday">Doğum günüm</div>
           </md-list-item>
         </md-list>
       </div>
       <div class="card story" style="--i:2">
         <md-icon class="ic">build_circle</md-icon>
-        <p class="md-typescale-body-large">Küçükken bir gün boyunca bir çalar saati tamir etmeye çalışmışım. Tamir edebildim mi, hatırlamıyorum.</p>
-        <p class="md-typescale-body-large">İlkokulda sınıf başkanıydım. Bir gün öğretmenimiz sınıftan çıkmak zorunda kalınca beni bilgisayarın başına geçirdi. Trackpad'den kaydırma yapmayı bile bilmiyordum.</p>
+        <p class="md-typescale-body-large" data-i18n="story1">Küçükken bir gün boyunca bir çalar saati tamir etmeye çalışmışım. Tamir edebildim mi, hatırlamıyorum.</p>
+        <p class="md-typescale-body-large" data-i18n="story2">İlkokulda sınıf başkanıydım. Bir gün öğretmenimiz sınıftan çıkmak zorunda kalınca beni bilgisayarın başına geçirdi. Trackpad'den kaydırma yapmayı bile bilmiyordum.</p>
       </div>
     </div>
   </section>
 
   <!-- 3 · Yolculuk -->
-  <section class="page" id="s2" aria-label="Yolculuk">
+  <section class="page" id="s2" aria-label="Yolculuk" data-i18n-attr="aria-label:navJourney">
     <div class="wrap stagger">
-      <h2 class="md-typescale-headline-large" style="--i:0">Yolculuğum</h2>
+      <h2 class="md-typescale-headline-large" style="--i:0" data-i18n="journeyTitle">Yolculuğum</h2>
       <ol class="timeline" style="--i:1">
         <li style="--i:1">
           <div class="dot"><md-icon>computer</md-icon></div>
           <div>
-            <h3 class="md-typescale-title-large">Her şey evde başladı</h3>
-            <div class="md-typescale-label-large when">2020 · Pandemi</div>
-            <p class="md-typescale-body-medium">Herkes evlere kapanınca eğitim uzaktan yapılmaya başlandı. Evimize ilk kez bir bilgisayar ve ev interneti geldi. O günden beri teknolojiyle ve insanlara faydalı bir şeyler yapmakla uğraşıyorum.</p>
+            <h3 class="md-typescale-title-large" data-i18n="j1t">Her şey evde başladı</h3>
+            <div class="md-typescale-label-large when" data-i18n="j1w">2020 · Pandemi</div>
+            <p class="md-typescale-body-medium" data-i18n="j1d">Herkes evlere kapanınca eğitim uzaktan yapılmaya başlandı. Evimize ilk kez bir bilgisayar ve ev interneti geldi. O günden beri teknolojiyle ve insanlara faydalı bir şeyler yapmakla uğraşıyorum.</p>
           </div>
         </li>
         <li style="--i:2">
           <div class="dot warn"><md-icon>build</md-icon></div>
           <div>
-            <h3 class="md-typescale-title-large">Laptop bozuldu</h3>
-            <div class="md-typescale-label-large when">2024 başı</div>
-            <p class="md-typescale-body-medium">Anakart arızası yüzünden laptopum sürekli kapanmaya başladı. Defalarca tamire götürdük ama düzelmedi.</p>
+            <h3 class="md-typescale-title-large" data-i18n="j2t">Laptop bozuldu</h3>
+            <div class="md-typescale-label-large when" data-i18n="j2w">2024 başı</div>
+            <p class="md-typescale-body-medium" data-i18n="j2d">Anakart arızası yüzünden laptopum sürekli kapanmaya başladı. Defalarca tamire götürdük ama düzelmedi.</p>
           </div>
         </li>
         <li style="--i:3">
           <div class="dot warn"><md-icon>heart_broken</md-icon></div>
           <div>
-            <h3 class="md-typescale-title-large">Her şey silindi</h3>
-            <div class="md-typescale-label-large when">2026 başı</div>
-            <p class="md-typescale-body-medium">Tamirden döndüğünde hâlâ bozuktu, üstüne içindeki her şey silinmişti: projelerim, videolarımız ve çocukluk fotoğraflarım. Kuzenlerimden sadece 40-50 fotoğrafı kurtarabildik.</p>
+            <h3 class="md-typescale-title-large" data-i18n="j3t">Her şey silindi</h3>
+            <div class="md-typescale-label-large when" data-i18n="j3w">2026 başı</div>
+            <p class="md-typescale-body-medium" data-i18n="j3d">Tamirden döndüğünde hâlâ bozuktu, üstüne içindeki her şey silinmişti: projelerim, videolarımız ve çocukluk fotoğraflarım. Kuzenlerimden sadece 40-50 fotoğrafı kurtarabildik.</p>
           </div>
         </li>
         <li style="--i:4">
           <div class="dot ok"><md-icon>cloud_done</md-icon></div>
           <div>
-            <h3 class="md-typescale-title-large">Yeniden başlıyorum</h3>
-            <div class="md-typescale-label-large when">Şimdi</div>
-            <p class="md-typescale-body-medium">Artık her şeyi yedekliyorum. Bilgisayarım olmadığı için telefondan tasarımlar yapıyor, açık kaynak uygulamalara Türkçe çeviri katkısı veriyorum. Yeni bir bilgisayar için para biriktiriyorum.</p>
+            <h3 class="md-typescale-title-large" data-i18n="j4t">Yeniden başlıyorum</h3>
+            <div class="md-typescale-label-large when" data-i18n="j4w">Şimdi</div>
+            <p class="md-typescale-body-medium" data-i18n="j4d">Artık her şeyi yedekliyorum. Bilgisayarım olmadığı için telefondan tasarımlar yapıyor, açık kaynak uygulamalara Türkçe çeviri katkısı veriyorum. Yeni bir bilgisayar için para biriktiriyorum.</p>
           </div>
         </li>
       </ol>
@@ -628,50 +785,50 @@
   </section>
 
   <!-- 4 · Anılar -->
-  <section class="page" id="s3" aria-label="Anılar">
+  <section class="page" id="s3" aria-label="Anılar" data-i18n-attr="aria-label:navMemories">
     <div class="wrap">
       <div class="stagger">
-        <h2 class="md-typescale-headline-large" style="--i:0">Elimde kalan anılar</h2>
-        <p class="md-typescale-body-large" style="--i:1; margin-top:8px; opacity:.85">Verilerimi kaybettikten sonra elimde kalan çocukluk karelerinden bazıları.</p>
+        <h2 class="md-typescale-headline-large" style="--i:0" data-i18n="memTitle">Elimde kalan anılar</h2>
+        <p class="md-typescale-body-large" style="--i:1; margin-top:8px; opacity:.85" data-i18n="memSub">Verilerimi kaybettikten sonra elimde kalan çocukluk karelerinden bazıları.</p>
       </div>
-      <div class="gallery" aria-label="Fotoğraflar">
+      <div class="gallery" aria-label="Fotoğraflar" data-i18n-attr="aria-label:galleryLabel">
         <figure class="shot">
           <md-elevation></md-elevation>
-          <img src="assets/kova.jpg" alt="Başında kırmızı bir kovayla gülen küçük Hasan" draggable="false" loading="lazy">
-          <figcaption class="md-typescale-body-medium">Başımda kova, suratımda koca bir gülümseme.</figcaption>
+          <img src="assets/kova.jpg" alt="Başında kırmızı bir kovayla gülen küçük Hasan" data-i18n-attr="alt:alt1" draggable="false" loading="lazy">
+          <figcaption class="md-typescale-body-medium" data-i18n="cap1">Başımda kova, suratımda koca bir gülümseme.</figcaption>
         </figure>
         <figure class="shot">
           <md-elevation></md-elevation>
-          <img src="assets/oyuncak.jpg" alt="Elinde mavi bir oyuncakla poz veren küçük Hasan" draggable="false" loading="lazy">
-          <figcaption class="md-typescale-body-medium">Elimde yine bir şey var: belki bozulmuş, belki tamir edilecek.</figcaption>
+          <img src="assets/oyuncak.jpg" alt="Elinde mavi bir oyuncakla poz veren küçük Hasan" data-i18n-attr="alt:alt2" draggable="false" loading="lazy">
+          <figcaption class="md-typescale-body-medium" data-i18n="cap2">Elimde yine bir şey var: belki bozulmuş, belki tamir edilecek.</figcaption>
         </figure>
         <figure class="shot">
           <md-elevation></md-elevation>
-          <img src="assets/pasta.jpg" alt="Doğum günü pastasının mumlarını üfleyen küçük Hasan" draggable="false" loading="lazy">
-          <figcaption class="md-typescale-body-medium">Doğum günü pastası ve dilek tutma zamanı.</figcaption>
+          <img src="assets/pasta.jpg" alt="Doğum günü pastasının mumlarını üfleyen küçük Hasan" data-i18n-attr="alt:alt3" draggable="false" loading="lazy">
+          <figcaption class="md-typescale-body-medium" data-i18n="cap3">Doğum günü pastası ve dilek tutma zamanı.</figcaption>
         </figure>
       </div>
-      <div class="swipe-hint md-typescale-label-large"><md-icon>swipe</md-icon> Yana kaydır</div>
+      <div class="swipe-hint md-typescale-label-large"><md-icon>swipe</md-icon> <span data-i18n="swipe">Yana kaydır</span></div>
     </div>
   </section>
 
   <!-- 5 · Şu an -->
-  <section class="page" id="s4" aria-label="Şu an">
-    <div class="wrap">
-      <h2 class="md-typescale-headline-large">Şu an</h2>
+  <section class="page" id="s4" aria-label="Şu an" data-i18n-attr="aria-label:navNow">
+    <div class="wrap grid2">
+      <h2 class="md-typescale-headline-large span-all" data-i18n="nowTitle">Şu an</h2>
 
       <div class="card health">
         <div class="card-head">
           <md-icon>monitor_heart</md-icon>
-          <span class="md-typescale-title-medium grow">Sağlık</span>
+          <span class="md-typescale-title-medium grow" data-i18n="health">Sağlık</span>
           <span class="sync md-typescale-label-medium"><md-icon>sync</md-icon><span id="syncTxt">az önce</span></span>
         </div>
         <div class="health-body">
           <div class="ring">
-            <md-circular-progress id="stepRing" value="0" max="1" aria-label="Günlük adım hedefi"></md-circular-progress>
+            <md-circular-progress id="stepRing" value="0" max="1" aria-label="Günlük adım hedefi" data-i18n-attr="aria-label:ringLabel"></md-circular-progress>
             <div class="ring-label">
               <div id="steps" class="md-typescale-headline-small">0</div>
-              <div class="md-typescale-label-medium unit">adım</div>
+              <div class="md-typescale-label-medium unit" data-i18n="unitSteps">adım</div>
             </div>
           </div>
           <div class="metrics">
@@ -686,7 +843,7 @@
               <md-icon>bedtime</md-icon>
               <div class="grow">
                 <div class="val"><span id="sleep" class="md-typescale-title-large">6 sa 40 dk</span></div>
-                <md-linear-progress id="sleepBar" value="0.8" max="1" aria-label="Uyku hedefi"></md-linear-progress>
+                <md-linear-progress id="sleepBar" value="0.8" max="1" aria-label="Uyku hedefi" data-i18n-attr="aria-label:sleepLabel"></md-linear-progress>
               </div>
             </div>
           </div>
@@ -697,7 +854,7 @@
       <div class="card music">
         <div class="card-head">
           <md-icon>headphones</md-icon>
-          <span class="md-typescale-title-medium">Hasan ne dinliyor?</span>
+          <span class="md-typescale-title-medium" data-i18n="musicTitle">Hasan ne dinliyor?</span>
         </div>
         <div class="track">
           <div class="art">
@@ -722,37 +879,37 @@
         <md-linear-progress id="musicLoad" indeterminate></md-linear-progress>
       </div>
 
-      <p class="credit md-typescale-label-medium">© <span id="year">2026</span> Hasan</p>
+      <p class="credit md-typescale-label-medium span-all">© <span id="year">2026</span> Hasan</p>
     </div>
   </section>
 
 </main>
 
-<nav class="nav" aria-label="Bölümler">
+<nav class="nav" aria-label="Bölümler" data-i18n-attr="aria-label:navLabel">
   <div class="nav-inner">
-    <button class="nav-item active" aria-label="Merhaba" aria-current="page">
+    <button class="nav-item active" aria-label="Merhaba" aria-current="page" data-i18n-attr="aria-label:navHome">
       <span class="pill"><md-ripple></md-ripple><md-icon>home</md-icon></span>
-      <span class="lbl md-typescale-label-medium">Merhaba</span>
+      <span class="lbl md-typescale-label-medium" data-i18n="navHome">Merhaba</span>
       <md-focus-ring></md-focus-ring>
     </button>
-    <button class="nav-item" aria-label="Ben">
+    <button class="nav-item" aria-label="Ben" data-i18n-attr="aria-label:navAbout">
       <span class="pill"><md-ripple></md-ripple><md-icon>person</md-icon></span>
-      <span class="lbl md-typescale-label-medium">Ben</span>
+      <span class="lbl md-typescale-label-medium" data-i18n="navAbout">Ben</span>
       <md-focus-ring></md-focus-ring>
     </button>
-    <button class="nav-item" aria-label="Yolculuk">
+    <button class="nav-item" aria-label="Yolculuk" data-i18n-attr="aria-label:navJourney">
       <span class="pill"><md-ripple></md-ripple><md-icon>route</md-icon></span>
-      <span class="lbl md-typescale-label-medium">Yolculuk</span>
+      <span class="lbl md-typescale-label-medium" data-i18n="navJourney">Yolculuk</span>
       <md-focus-ring></md-focus-ring>
     </button>
-    <button class="nav-item" aria-label="Anılar">
+    <button class="nav-item" aria-label="Anılar" data-i18n-attr="aria-label:navMemories">
       <span class="pill"><md-ripple></md-ripple><md-icon>photo_library</md-icon></span>
-      <span class="lbl md-typescale-label-medium">Anılar</span>
+      <span class="lbl md-typescale-label-medium" data-i18n="navMemories">Anılar</span>
       <md-focus-ring></md-focus-ring>
     </button>
-    <button class="nav-item" aria-label="Şu an">
+    <button class="nav-item" aria-label="Şu an" data-i18n-attr="aria-label:navNow">
       <span class="pill"><md-ripple></md-ripple><md-icon>bolt</md-icon></span>
-      <span class="lbl md-typescale-label-medium">Şu an</span>
+      <span class="lbl md-typescale-label-medium" data-i18n="navNow">Şu an</span>
       <md-focus-ring></md-focus-ring>
     </button>
   </div>
@@ -769,7 +926,177 @@
 
   const $ = id => document.getElementById(id);
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const trNum = new Intl.NumberFormat('tr-TR');
+  /* ---------- Dil sistemi (TR · EN · DE) ---------- */
+  const LANGS = ['tr', 'en', 'de'];
+  const LOCALES = { tr: 'tr-TR', en: 'en-US', de: 'de-DE' };
+  const COUNTRY_LANG = { TR: 'tr', DE: 'de', AT: 'de', CH: 'de', LI: 'de' };
+  const ord = n => { const x = ['th', 'st', 'nd', 'rd'], v = n % 100; return n + (x[(v - 20) % 10] || x[v] || x[0]); };
+
+  const STR = {
+    tr: {
+      navLabel: `Bölümler`, navHome: `Merhaba`, navAbout: `Ben`, navJourney: `Yolculuk`, navMemories: `Anılar`, navNow: `Şu an`,
+      topActions: `Hızlı eylemler`, topContact: `İletişim`, topLang: `Dil`, mailLbl: `E-posta`, telLbl: `Telefon`,
+      heroTitle: `Merhaba,<br>ben Hasan.`,
+      heroIntro: `{age} yaşındayım. Elektronik, mekanik ve teknolojiyle aram iyi. Bir şeyleri tamir etmeyi, tasarlamayı ve açık kaynak projelere katkı vermeyi seviyorum.`,
+      chipsLabel: `İlgi alanlarım`, chipElec: `Elektronik`, chipMech: `Mekanik`, chipOss: `Açık kaynak`, chipDesign: `Mobil tasarım`, chipTr: `Türkçe çeviri`,
+      btnStart: `Hikâyemi keşfet`, btnMusic: `Ne dinliyorum?`,
+      aboutTitle: `Biraz benden`, schoolKinderSub: `Anaokulu, ilkokul ve ortaokul`, highSub: `Şu an lisede okuyorum`,
+      bdayDate: `25 Temmuz 2010`,
+      bdayToday: `Bugün doğum günüm!`,
+      bdayNext: ({ n, days }) => `${n}. yaş günüme ${days} gün kaldı`,
+      story1: `Küçükken bir gün boyunca bir çalar saati tamir etmeye çalışmışım. Tamir edebildim mi, hatırlamıyorum.`,
+      story2: `İlkokulda sınıf başkanıydım. Bir gün öğretmenimiz sınıftan çıkmak zorunda kalınca beni bilgisayarın başına geçirdi. Trackpad'den kaydırma yapmayı bile bilmiyordum.`,
+      journeyTitle: `Yolculuğum`,
+      j1t: `Her şey evde başladı`, j1w: `2020 · Pandemi`,
+      j1d: `Herkes evlere kapanınca eğitim uzaktan yapılmaya başlandı. Evimize ilk kez bir bilgisayar ve ev interneti geldi. O günden beri teknolojiyle ve insanlara faydalı bir şeyler yapmakla uğraşıyorum.`,
+      j2t: `Laptop bozuldu`, j2w: `2024 başı`,
+      j2d: `Anakart arızası yüzünden laptopum sürekli kapanmaya başladı. Defalarca tamire götürdük ama düzelmedi.`,
+      j3t: `Her şey silindi`, j3w: `2026 başı`,
+      j3d: `Tamirden döndüğünde hâlâ bozuktu, üstüne içindeki her şey silinmişti: projelerim, videolarımız ve çocukluk fotoğraflarım. Kuzenlerimden sadece 40-50 fotoğrafı kurtarabildik.`,
+      j4t: `Yeniden başlıyorum`, j4w: `Şimdi`,
+      j4d: `Artık her şeyi yedekliyorum. Bilgisayarım olmadığı için telefondan tasarımlar yapıyor, açık kaynak uygulamalara Türkçe çeviri katkısı veriyorum. Yeni bir bilgisayar için para biriktiriyorum.`,
+      memTitle: `Elimde kalan anılar`, memSub: `Verilerimi kaybettikten sonra elimde kalan çocukluk karelerinden bazıları.`,
+      galleryLabel: `Fotoğraflar`, swipe: `Yana kaydır`,
+      alt1: `Başında kırmızı bir kovayla gülen küçük Hasan`, alt2: `Elinde mavi bir oyuncakla poz veren küçük Hasan`, alt3: `Doğum günü pastasının mumlarını üfleyen küçük Hasan`,
+      cap1: `Başımda kova, suratımda koca bir gülümseme.`, cap2: `Elimde yine bir şey var: belki bozulmuş, belki tamir edilecek.`, cap3: `Doğum günü pastası ve dilek tutma zamanı.`,
+      nowTitle: `Şu an`, health: `Sağlık`, ringLabel: `Günlük adım hedefi`, sleepLabel: `Uyku hedefi`, unitSteps: `adım`,
+      syncNow: `az önce`, sync30: `30 sn önce`,
+      sleepFmt: ({ h, m }) => `${h} sa ${m} dk`,
+      extra: ({ km, kcal, goal }) => `${km} km · ${kcal} kcal · hedef ${goal} adım`,
+      musicTitle: `Hasan ne dinliyor?`,
+      loading: `Yükleniyor`, searching: `Önizleme aranıyor`, playPrev: `30 saniyelik önizlemeyi çal`, pausePrev: `Önizlemeyi duraklat`, noPrev: `Bu şarkı için önizleme bulunamadı`,
+      noSongs: `Henüz şarkı yok`, musicFail: `Müzik bilgisi alınamadı`, musicRetry: `Biraz sonra tekrar denenecek`, nowPlaying: `Şu an çalıyor`,
+      agoNow: `az önce`, agoMin: ({ n }) => `${n} dk önce`, agoHour: ({ n }) => `${n} sa önce`, agoDay: ({ n }) => `${n} gün önce`
+    },
+    en: {
+      navLabel: `Sections`, navHome: `Home`, navAbout: `About`, navJourney: `Journey`, navMemories: `Memories`, navNow: `Now`,
+      topActions: `Quick actions`, topContact: `Contact`, topLang: `Language`, mailLbl: `Email`, telLbl: `Phone`,
+      heroTitle: `Hello,<br>I'm Hasan.`,
+      heroIntro: `I'm {age} years old. I'm into electronics, mechanics, and technology. I love fixing things, designing them, and contributing to open-source projects.`,
+      chipsLabel: `My interests`, chipElec: `Electronics`, chipMech: `Mechanics`, chipOss: `Open source`, chipDesign: `Mobile design`, chipTr: `Turkish translation`,
+      btnStart: `Discover my story`, btnMusic: `What am I listening to?`,
+      aboutTitle: `A little about me`, schoolKinderSub: `Kindergarten, primary and middle school`, highSub: `Currently in high school`,
+      bdayDate: `July 25, 2010`,
+      bdayToday: `It's my birthday today!`,
+      bdayNext: ({ n, days }) => `${days} ${days === 1 ? 'day' : 'days'} until my ${ord(n)} birthday`,
+      story1: `When I was little, I apparently spent a whole day trying to fix an alarm clock. Whether I actually managed it, I can't remember.`,
+      story2: `In primary school I was class president. One day, when our teacher had to step out of the classroom, she sat me down at the computer. I didn't even know how to scroll with a trackpad.`,
+      journeyTitle: `My journey`,
+      j1t: `It all started at home`, j1w: `2020 · The pandemic`,
+      j1d: `When everyone had to stay indoors, school moved online. That's when we got our first computer and home internet. Ever since, I've been busy with technology and with building things that help people.`,
+      j2t: `My laptop broke`, j2w: `Early 2024`,
+      j2d: `A motherboard fault made my laptop shut down constantly. We took it in for repair again and again, but it never got fixed.`,
+      j3t: `Everything was wiped`, j3w: `Early 2026`,
+      j3d: `When it came back from repair it was still broken, and everything on it had been erased: my projects, our videos, and my childhood photos. We were only able to recover 40–50 photos, from my cousins.`,
+      j4t: `Starting over`, j4w: `Now`,
+      j4d: `I back everything up now. Since I don't have a computer, I make designs on my phone and contribute Turkish translations to open-source apps. I'm saving up for a new computer.`,
+      memTitle: `Memories I have left`, memSub: `A few childhood snapshots that survived after I lost my data.`,
+      galleryLabel: `Photos`, swipe: `Swipe sideways`,
+      alt1: `Little Hasan laughing with a red bucket on his head`, alt2: `Little Hasan posing with a blue toy in his hands`, alt3: `Little Hasan blowing out the candles on a birthday cake`,
+      cap1: `A bucket on my head and a huge grin on my face.`, cap2: `Something in my hands again: maybe broken, maybe waiting to be fixed.`, cap3: `Birthday cake and time to make a wish.`,
+      nowTitle: `Right now`, health: `Health`, ringLabel: `Daily step goal`, sleepLabel: `Sleep goal`, unitSteps: `steps`,
+      syncNow: `just now`, sync30: `30 s ago`,
+      sleepFmt: ({ h, m }) => `${h} h ${m} min`,
+      extra: ({ km, kcal, goal }) => `${km} km · ${kcal} kcal · goal ${goal} steps`,
+      musicTitle: `What is Hasan listening to?`,
+      loading: `Loading`, searching: `Looking for a preview`, playPrev: `Play 30-second preview`, pausePrev: `Pause preview`, noPrev: `No preview found for this song`,
+      noSongs: `No songs yet`, musicFail: `Couldn't load music info`, musicRetry: `Will try again shortly`, nowPlaying: `Now playing`,
+      agoNow: `just now`, agoMin: ({ n }) => `${n} min ago`, agoHour: ({ n }) => `${n} h ago`, agoDay: ({ n }) => `${n} ${n === 1 ? 'day' : 'days'} ago`
+    },
+    de: {
+      navLabel: `Bereiche`, navHome: `Hallo`, navAbout: `Über mich`, navJourney: `Weg`, navMemories: `Momente`, navNow: `Jetzt`,
+      topActions: `Schnellaktionen`, topContact: `Kontakt`, topLang: `Sprache`, mailLbl: `E-Mail`, telLbl: `Telefon`,
+      heroTitle: `Hallo,<br>ich bin Hasan.`,
+      heroIntro: `Ich bin {age} Jahre alt und begeistere mich für Elektronik, Mechanik und Technik. Ich repariere und gestalte gern Dinge und trage zu Open-Source-Projekten bei.`,
+      chipsLabel: `Meine Interessen`, chipElec: `Elektronik`, chipMech: `Mechanik`, chipOss: `Open Source`, chipDesign: `Mobile Design`, chipTr: `Türkisch-Übersetzung`,
+      btnStart: `Meine Geschichte entdecken`, btnMusic: `Was höre ich gerade?`,
+      aboutTitle: `Ein wenig über mich`, schoolKinderSub: `Kindergarten, Grundschule und Mittelstufe`, highSub: `Ich besuche derzeit das Gymnasium`,
+      bdayDate: `25. Juli 2010`,
+      bdayToday: `Heute habe ich Geburtstag!`,
+      bdayNext: ({ n, days }) => `Noch ${days} ${days === 1 ? 'Tag' : 'Tage'} bis zu meinem ${n}. Geburtstag`,
+      story1: `Als Kind habe ich angeblich einen ganzen Tag lang versucht, einen Wecker zu reparieren. Ob es mir gelungen ist, weiß ich nicht mehr.`,
+      story2: `In der Grundschule war ich Klassensprecher. Als unsere Lehrkraft eines Tages den Raum verlassen musste, setzte sie mich an den Computer. Ich wusste nicht einmal, wie man mit dem Trackpad scrollt.`,
+      journeyTitle: `Mein Weg`,
+      j1t: `Alles begann zu Hause`, j1w: `2020 · Pandemie`,
+      j1d: `Als alle zu Hause bleiben mussten, wurde der Unterricht ins Netz verlegt. Damals bekamen wir zum ersten Mal einen Computer und Internet zu Hause. Seitdem beschäftige ich mich mit Technik und versuche, Dinge zu schaffen, die anderen nützen.`,
+      j2t: `Mein Laptop ging kaputt`, j2w: `Anfang 2024`,
+      j2d: `Wegen eines Mainboard-Defekts schaltete sich mein Laptop ständig aus. Wir brachten ihn mehrfach zur Reparatur, doch das Problem blieb.`,
+      j3t: `Alles wurde gelöscht`, j3w: `Anfang 2026`,
+      j3d: `Nach der Reparatur war er immer noch defekt, und obendrein war alles darauf gelöscht: meine Projekte, unsere Videos und meine Kindheitsfotos. Nur 40–50 Fotos konnten wir von meinen Cousins zurückbekommen.`,
+      j4t: `Neuanfang`, j4w: `Jetzt`,
+      j4d: `Jetzt sichere ich alles. Da ich keinen Computer habe, gestalte ich am Handy und übersetze Open-Source-Apps ins Türkische. Auf einen neuen Computer spare ich gerade.`,
+      memTitle: `Was mir an Erinnerungen geblieben ist`, memSub: `Einige Kindheitsfotos, die nach dem Datenverlust noch übrig sind.`,
+      galleryLabel: `Fotos`, swipe: `Seitlich wischen`,
+      alt1: `Der kleine Hasan lacht mit einem roten Eimer auf dem Kopf`, alt2: `Der kleine Hasan posiert mit einem blauen Spielzeug in der Hand`, alt3: `Der kleine Hasan bläst die Kerzen auf seiner Geburtstagstorte aus`,
+      cap1: `Einen Eimer auf dem Kopf und ein breites Grinsen im Gesicht.`, cap2: `Schon wieder habe ich etwas in der Hand: vielleicht kaputt, vielleicht reif für die Reparatur.`, cap3: `Geburtstagstorte und Zeit für einen Wunsch.`,
+      nowTitle: `Gerade jetzt`, health: `Gesundheit`, ringLabel: `Tägliches Schrittziel`, sleepLabel: `Schlafziel`, unitSteps: `Schritte`,
+      syncNow: `gerade eben`, sync30: `vor 30 Sek.`,
+      sleepFmt: ({ h, m }) => `${h} Std. ${m} Min.`,
+      extra: ({ km, kcal, goal }) => `${km} km · ${kcal} kcal · Ziel: ${goal} Schritte`,
+      musicTitle: `Was hört Hasan gerade?`,
+      loading: `Wird geladen`, searching: `Vorschau wird gesucht`, playPrev: `30-Sekunden-Vorschau abspielen`, pausePrev: `Vorschau pausieren`, noPrev: `Keine Vorschau für diesen Song gefunden`,
+      noSongs: `Noch keine Songs`, musicFail: `Musikinfos konnten nicht geladen werden`, musicRetry: `Gleich wird es erneut versucht`, nowPlaying: `Läuft gerade`,
+      agoNow: `gerade eben`, agoMin: ({ n }) => `vor ${n} Min.`, agoHour: ({ n }) => `vor ${n} Std.`, agoDay: ({ n }) => `vor ${n} ${n === 1 ? 'Tag' : 'Tagen'}`
+    }
+  };
+
+  let lang = 'tr', userChose = false;
+  const ctx = { age: 16 };
+  const langHooks = [];
+  const tx = (key, vars) => {
+    let v = STR[lang][key];
+    if (v === undefined) v = STR.tr[key];
+    if (v === undefined) return key;
+    if (typeof v === 'function') return v(vars || {});
+    return v.replace(/\{(\w+)\}/g, (_, k) => (vars && vars[k] !== undefined ? vars[k] : ctx[k] !== undefined ? ctx[k] : ''));
+  };
+  const nf = () => new Intl.NumberFormat(LOCALES[lang]);
+
+  function applyStatic() {
+    document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = tx(el.dataset.i18n); });
+    document.querySelectorAll('[data-i18n-html]').forEach(el => { el.innerHTML = tx(el.dataset.i18nHtml); });
+    document.querySelectorAll('[data-i18n-attr]').forEach(el => {
+      el.dataset.i18nAttr.split(';').forEach(pair => {
+        const [attr, key] = pair.split(':');
+        if (attr && key) el.setAttribute(attr.trim(), tx(key.trim()));
+      });
+    });
+  }
+
+  function setLang(code, manual) {
+    if (!LANGS.includes(code)) code = 'en';
+    lang = code;
+    document.documentElement.lang = code;
+    if (manual) { try { localStorage.setItem('lang', code); } catch (e) { /* depolama kapalı */ } }
+    langHooks.forEach(fn => fn());
+    applyStatic();
+    document.querySelectorAll('#langMenu md-menu-item').forEach(item => {
+      item.toggleAttribute('selected', item.dataset.lang === code);
+    });
+  }
+
+  // Öncelik: kayıtlı seçim → sistem/tarayıcı dili → IP'ye göre ülke → İngilizce
+  function detectLang() {
+    try {
+      const saved = localStorage.getItem('lang');
+      if (LANGS.includes(saved)) return { code: saved };
+    } catch (e) { /* yoksay */ }
+    const list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+    for (const l of list) {
+      const c = String(l || '').slice(0, 2).toLowerCase();
+      if (LANGS.includes(c)) return { code: c };
+    }
+    return { code: 'en', needIp: true };
+  }
+  async function langFromIp() {
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), 3500);
+    try {
+      const res = await fetch('https://api.country.is/', { signal: ctl.signal, cache: 'no-store' });
+      const { country } = await res.json();
+      return COUNTRY_LANG[country] || null;
+    } catch (e) { return null; } finally { clearTimeout(timer); }
+  }
 
   /* ---------- Yaş ve doğum günü sayacı ---------- */
   const BIRTH = { y: 2010, m: 6, d: 25 };
@@ -778,17 +1105,18 @@
     let age = now.getFullYear() - BIRTH.y;
     const had = now.getMonth() > BIRTH.m || (now.getMonth() === BIRTH.m && now.getDate() >= BIRTH.d);
     if (!had) age--;
-    $('age').textContent = age;
+    ctx.age = age;
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     let next = new Date(now.getFullYear(), BIRTH.m, BIRTH.d);
     if (next < today) next = new Date(now.getFullYear() + 1, BIRTH.m, BIRTH.d);
     const days = Math.round((next - today) / 86400000);
     $('bday').textContent = days === 0
-      ? 'Bugün doğum günüm!'
-      : `${next.getFullYear() - BIRTH.y}. yaş günüme ${days} gün kaldı`;
+      ? tx('bdayToday')
+      : tx('bdayNext', { n: next.getFullYear() - BIRTH.y, days });
     $('year').textContent = now.getFullYear();
   }
   updateAge();
+  langHooks.push(updateAge);
 
   /* ---------- Bölümler ve gezinme ---------- */
   const scroller = $('scroller');
@@ -809,22 +1137,36 @@
     sections[i].scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
     lockTimer = setTimeout(() => {
       navLock = false;
-      setActive(Math.round(scroller.scrollTop / scroller.clientHeight));
+      setActive(computeActive());
     }, reduceMotion ? 50 : 900);
   }
   navItems.forEach((b, i) => b.addEventListener('click', () => goTo(i)));
   $('startBtn').addEventListener('click', () => goTo(1));
   $('musicBtn').addEventListener('click', () => goTo(4));
 
+  // Aktif bölüm: kısa ekranlarda bölümler görünümden uzun olabildiği için kaydırma konumuna göre hesaplanır
+  function computeActive() {
+    if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 2) return sections.length - 1;
+    const y = scroller.scrollTop + scroller.clientHeight * 0.4;
+    let idx = 0;
+    sections.forEach((sec, i) => { if (sec.offsetTop <= y) idx = i; });
+    return idx;
+  }
+  let scrollRaf = 0;
+  scroller.addEventListener('scroll', () => {
+    if (navLock || scrollRaf) return;
+    scrollRaf = requestAnimationFrame(() => { scrollRaf = 0; setActive(computeActive()); });
+  }, { passive: true });
+
+  // Giriş animasyonları: bölüm görünüme girer girmez (yüksekliğinden bağımsız) tetiklenir
   const io = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       entry.target.querySelectorAll('.stagger').forEach(el => el.classList.add('in'));
       if (entry.target.classList.contains('stagger')) entry.target.classList.add('in');
-      if (!navLock) setActive(sections.indexOf(entry.target));
     });
-  }, { root: scroller, threshold: 0.55 });
-  sections.forEach(s => io.observe(s));
+  }, { root: scroller, threshold: 0, rootMargin: '0px 0px -20% 0px' });
+  sections.forEach(sec => io.observe(sec));
 
   /* ---------- Sağlık verileri ---------- */
   function mulberry32(a) {
@@ -884,20 +1226,21 @@
   }
   function showSleep() {
     const m = day.sleepMin;
-    $('sleep').textContent = `${Math.floor(m / 60)} sa ${m % 60} dk`;
+    $('sleep').textContent = tx('sleepFmt', { h: Math.floor(m / 60), m: m % 60 });
     $('sleepBar').value = Math.min(1, m / 480);
   }
 
-  let shownSteps = -1, shownBpm = -1, lastSlot = -1, lastBpmStep = 0;
+  let shownSteps = -1, shownBpm = -1, lastSlot = -1, lastBpmStep = 0, syncOld = false;
+  const renderSync = () => { $('syncTxt').textContent = tx(syncOld ? 'sync30' : 'syncNow'); };
   function tickHealth() {
     const now = new Date();
     const steps = stepsNow(now);
     if (steps !== shownSteps) {
       shownSteps = steps;
-      $('steps').textContent = trNum.format(steps);
+      $('steps').textContent = nf().format(steps);
       $('stepRing').value = Math.min(1, steps / 10000);
-      const km = (steps * 0.00072).toFixed(1).replace('.', ',');
-      $('extra').textContent = `${km} km · ${Math.round(steps * 0.04)} kcal · hedef 10.000 adım`;
+      const km = new Intl.NumberFormat(LOCALES[lang], { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(steps * 0.00072);
+      $('extra').textContent = tx('extra', { km, kcal: Math.round(steps * 0.04), goal: nf().format(10000) });
     }
     // Nabız hedefe en fazla 5 saniyede 1 bpm yaklaşır: ani sıçrama olmaz
     const target = Math.round(bpmTarget(now.getTime()));
@@ -915,13 +1258,15 @@
     const slot = Math.floor(now.getTime() / 30000);
     if (slot !== lastSlot) {
       lastSlot = slot;
-      $('syncTxt').textContent = 'az önce';
-      setTimeout(() => { $('syncTxt').textContent = '30 sn önce'; }, 15000);
+      syncOld = false;
+      renderSync();
+      setTimeout(() => { syncOld = true; renderSync(); }, 15000);
     }
   }
   showSleep();
   tickHealth();
   setInterval(tickHealth, 1000);
+  langHooks.push(() => { shownSteps = -1; showSleep(); tickHealth(); renderSync(); });
 
   /* ---------- Last.fm + iTunes 30 sn önizleme ---------- */
   const LASTFM = { user: 'hasanbkaylan', key: 'd86f4c4cfa034a289293c509e4248503' };
@@ -931,15 +1276,21 @@
   const audio = new Audio();
   audio.preload = 'none';
   const playBtn = $('playBtn'), playIcon = $('playIcon'), prevRing = $('prevRing');
-  let currentKey = '', preview = null, loadedUrl = '';
+  let currentKey = '', preview = null, loadedUrl = '', previewState = 'searching';
+  function updatePlayLabel() {
+    let key;
+    if (preview) key = audio.paused ? 'playPrev' : 'pausePrev';
+    else key = previewState === 'none' ? 'noPrev' : 'searching';
+    playBtn.setAttribute('aria-label', tx(key));
+  }
   const previewCache = new Map();
 
   function ago(uts) {
     const s = Math.max(0, Math.floor(Date.now() / 1000 - uts));
-    if (s < 90) return 'az önce';
-    if (s < 3600) return `${Math.round(s / 60)} dk önce`;
-    if (s < 86400) return `${Math.round(s / 3600)} sa önce`;
-    return `${Math.round(s / 86400)} gün önce`;
+    if (s < 90) return tx('agoNow');
+    if (s < 3600) return tx('agoMin', { n: Math.round(s / 60) });
+    if (s < 86400) return tx('agoHour', { n: Math.round(s / 3600) });
+    return tx('agoDay', { n: Math.round(s / 86400) });
   }
 
   // Şarkı/sanatçı adlarını karşılaştırmak için sadeleştir
@@ -1014,7 +1365,10 @@
     prevRing.value = 0;
     playIcon.textContent = 'play_arrow';
   }
-  function setTrack({ name, artist, status, playing, art }) {
+  let trackView = () => ({ name: tx('loading'), artist: '', status: '', playing: false });
+  function setTrack(view) { trackView = view; renderTrack(); }
+  function renderTrack() {
+    const { name, artist, status, playing, art } = trackView();
     $('trackName').textContent = name;
     $('trackArtist').textContent = artist || '\u00a0';
     $('trackStatus').textContent = status;
@@ -1030,17 +1384,20 @@
     preview = null;
     stopPreview();
     playBtn.disabled = true;
-    playBtn.setAttribute('aria-label', 'Önizleme aranıyor');
+    previewState = 'searching';
+    updatePlayLabel();
     const found = await findPreview(name, artist);
     if (key !== currentKey) return;
     if (found) {
       preview = { url: found.previewUrl };
       playBtn.disabled = false;
-      playBtn.setAttribute('aria-label', '30 saniyelik önizlemeyi çal');
+      previewState = 'ready';
+      updatePlayLabel();
       const art = artOf(found);
       if (art) { $('art').src = art; $('art').hidden = false; $('artIcon').hidden = true; }
     } else {
-      playBtn.setAttribute('aria-label', 'Bu şarkı için önizleme bulunamadı');
+      previewState = 'none';
+      updatePlayLabel();
     }
   }
 
@@ -1052,11 +1409,11 @@
   });
   audio.addEventListener('play', () => {
     playIcon.textContent = 'pause';
-    playBtn.setAttribute('aria-label', 'Önizlemeyi duraklat');
+    updatePlayLabel();
   });
   audio.addEventListener('pause', () => {
     playIcon.textContent = 'play_arrow';
-    if (preview) playBtn.setAttribute('aria-label', '30 saniyelik önizlemeyi çal');
+    updatePlayLabel();
   });
   audio.addEventListener('ended', () => { prevRing.value = 0; });
   audio.addEventListener('timeupdate', () => {
@@ -1073,28 +1430,28 @@
       if (json.error) throw new Error(json.message);
       let t = json.recenttracks && json.recenttracks.track;
       if (Array.isArray(t)) t = t[0];
-      if (!t) { setTrack({ name: 'Henüz şarkı yok', artist: '', status: '', playing: false }); return; }
+      if (!t) { setTrack(() => ({ name: tx('noSongs'), artist: '', status: '', playing: false })); return; }
       const playing = !!(t['@attr'] && t['@attr'].nowplaying === 'true');
       const artist = (t.artist && (t.artist['#text'] || t.artist.name)) || '';
       const imgs = t.image || [];
       const big = (imgs.find(i => i.size === 'extralarge') || imgs[imgs.length - 1] || {})['#text'];
       const lfmArt = big && big.startsWith('https://') && !big.includes(PLACEHOLDER) ? big : '';
-      const itArt = artOf(previewCache.get(artist + '|' + t.name));
-      setTrack({
+      setTrack(() => ({
         name: t.name,
         artist,
-        status: playing ? 'Şu an çalıyor' : (t.date ? ago(t.date.uts) : ''),
+        status: playing ? tx('nowPlaying') : (t.date ? ago(t.date.uts) : ''),
         playing,
-        art: itArt || lfmArt
-      });
+        art: artOf(previewCache.get(artist + '|' + t.name)) || lfmArt
+      }));
       attachPreview(t.name, artist);
     } catch (err) {
-      setTrack({ name: 'Müzik bilgisi alınamadı', artist: 'Biraz sonra tekrar denenecek', status: '', playing: false });
+      setTrack(() => ({ name: tx('musicFail'), artist: tx('musicRetry'), status: '', playing: false }));
     } finally {
       $('musicLoad').hidden = true;
     }
   }
   loadMusic();
+  langHooks.push(() => { updatePlayLabel(); renderTrack(); });
   setInterval(() => { if (!document.hidden) loadMusic(); }, 20000);
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) audio.pause(); else loadMusic();
@@ -1126,6 +1483,20 @@
       if (e.gamma == null || e.beta == null) return;
       aim(clamp((e.beta - 55) * 0.25, 8), clamp(e.gamma * 0.5, 14));
     });
+  }
+
+  /* ---------- Sağ üst menüler + dil başlatma ---------- */
+  [['contactBtn', 'contactMenu'], ['langBtn', 'langMenu']].forEach(([btn, menu]) => {
+    const b = $(btn), m = $(menu);
+    b.addEventListener('click', () => { m.open = !m.open; });
+  });
+  document.querySelectorAll('#langMenu md-menu-item').forEach(item => {
+    item.addEventListener('click', () => { userChose = true; setLang(item.dataset.lang, true); });
+  });
+  const detected = detectLang();
+  setLang(detected.code);
+  if (detected.needIp) {
+    langFromIp().then(code => { if (code && !userChose) setLang(code); });
   }
 
   /* ---------- Açılış + CDN yedeği ---------- */
