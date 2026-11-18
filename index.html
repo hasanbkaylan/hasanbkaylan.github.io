@@ -11,7 +11,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,400..700&family=Google+Sans:opsz,wght@17..18,400..700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wdth,wght,GRAD,ROND@6..144,25..151,1..1000,0..100,0..100&family=Google+Sans:opsz,wght@17..18,400..700&display=swap">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans+Text:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0&display=block">
 
@@ -137,6 +137,22 @@
     :where(.md-typescale-label-large){font:500 14px/20px var(--md-ref-typeface-plain);letter-spacing:.1px}
     :where(.md-typescale-label-medium){font:500 12px/16px var(--md-ref-typeface-plain);letter-spacing:.5px}
 
+    /* Google Sans Flex değişken eksen ayarları (MD3 Expressive) */
+    .md-typescale-display-small,
+    .md-typescale-display-medium,
+    .md-typescale-headline-large,
+    .md-typescale-headline-medium,
+    .md-typescale-headline-small {
+      font-optical-sizing: auto;
+    }
+    .page h2 {
+      font-weight: 600;
+      font-variation-settings: "ROND" 85, "wdth" 102, "GRAD" 10;
+    }
+    @media (prefers-color-scheme: dark) {
+      .page h2 { font-variation-settings: "ROND" 85, "wdth" 102, "GRAD" 0; }
+    }
+
     /* Material Web bileşenlerinin [hidden] özelliğini her zaman gizli tut */
     [hidden] { display: none !important; }
 
@@ -246,6 +262,7 @@
     .tilt-text {
       margin: 0;
       font-weight: 700;
+      font-variation-settings: "ROND" 100, "wdth" 105, "GRAD" 15;
       letter-spacing: -0.5px;
       transform-origin: 25% 60%;
       transform: rotateX(calc(var(--rx, 0) * 1deg)) rotateY(calc(var(--ry, 0) * 1deg));
@@ -254,6 +271,9 @@
         1px 1px 0 var(--ext), 2px 2px 0 var(--ext), 3px 3px 0 var(--ext), 4px 4px 0 var(--ext),
         5px 5px 0 var(--ext), 6px 6px 0 var(--ext), 7px 7px 0 var(--ext), 8px 8px 0 var(--ext),
         10px 18px 24px color-mix(in srgb, var(--md-sys-color-shadow) 30%, transparent);
+    }
+    @media (prefers-color-scheme: dark) {
+      .tilt-text { font-variation-settings: "ROND" 100, "wdth" 105, "GRAD" 0; }
     }
     #s0.live .tilt-text { animation: none; }
     @keyframes sway {
@@ -438,6 +458,7 @@
     .metric { display: flex; align-items: center; gap: 10px; }
     .metric .grow { flex: 1; min-width: 0; }
     .val { display: flex; align-items: baseline; gap: 6px; }
+    #bpm { font-weight: 600; font-variation-settings: "ROND" 100, "wdth" 100, "GRAD" 20; }
     #heart { color: var(--md-sys-color-error-container); font-variation-settings: 'FILL' 1; animation: beat .8s infinite ease-in-out; }
     .metric > md-icon:not(#heart) { color: var(--md-sys-color-inverse-primary); font-variation-settings: 'FILL' 1; }
     @keyframes beat {
@@ -613,7 +634,7 @@
     .music md-linear-progress { margin-top: 10px; width: 100%; }
     .credit { text-align: center; opacity: .6; }
 
-    /* ================= MD3 Navigation Bar (resmî ripple + focus ring ile) ================= */
+    /* ================= MD3 Navigation Bar (resmî ripple + focus ring + simge animasyonları) ================= */
     .nav {
       position: fixed;
       left: 0;
@@ -669,11 +690,57 @@
       opacity: 0;
       transition: transform 300ms var(--md-sys-motion-easing-emphasized), opacity 150ms linear;
     }
-    .pill md-icon { position: relative; }
+    .pill md-icon {
+      position: relative;
+      transform-origin: center;
+      transition: color 200ms ease, font-variation-settings 240ms ease;
+    }
     .nav-item.active { color: var(--md-sys-color-on-surface); }
     .nav-item.active .pill::before { transform: scaleX(1); opacity: 1; }
     .nav-item.active .pill md-icon { color: var(--md-sys-color-on-secondary-container); font-variation-settings: 'FILL' 1; }
     .nav-item.active .lbl { font-weight: 700; }
+
+    /* Sekme simgelerine özel kısa süreli animasyonlar */
+    .nav-item.pop:nth-child(1) .pill md-icon { animation: navHomePop 460ms var(--md-sys-motion-easing-emphasized); }
+    .nav-item.pop:nth-child(2) .pill md-icon { animation: navPersonPop 480ms var(--md-sys-motion-easing-emphasized); }
+    .nav-item.pop:nth-child(3) .pill md-icon { animation: navRoutePop 500ms var(--md-sys-motion-easing-emphasized); }
+    .nav-item.pop:nth-child(4) .pill md-icon { animation: navPhotoPop 480ms var(--md-sys-motion-easing-emphasized); }
+    .nav-item.pop:nth-child(5) .pill md-icon { animation: navBoltPop 440ms var(--md-sys-motion-easing-emphasized); }
+
+    @keyframes navHomePop {
+      0%   { transform: scale(1); }
+      22%  { transform: translateY(1px) scale(1.14, 0.88); }
+      52%  { transform: translateY(-1.5px) scale(0.94, 1.14); }
+      78%  { transform: translateY(0.5px) scale(1.04, 0.97); }
+      100% { transform: scale(1); }
+    }
+    @keyframes navPersonPop {
+      0%   { transform: scale(1) rotate(0deg); }
+      28%  { transform: translateY(-1px) rotate(-10deg) scale(1.14); }
+      62%  { transform: translateY(0) rotate(8deg) scale(1.08); }
+      84%  { transform: rotate(-3deg) scale(1.02); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+    @keyframes navRoutePop {
+      0%   { transform: translateX(0) rotate(0deg) scale(1); }
+      28%  { transform: translateX(-2px) rotate(-12deg) scale(1.14); }
+      62%  { transform: translateX(2px) rotate(10deg) scale(1.12); }
+      84%  { transform: translateX(-0.5px) rotate(-4deg) scale(1.03); }
+      100% { transform: translateX(0) rotate(0deg) scale(1); }
+    }
+    @keyframes navPhotoPop {
+      0%   { transform: rotate(0deg) scale(1); }
+      32%  { transform: rotate(-14deg) scale(1.18); }
+      68%  { transform: rotate(7deg) scale(1.06); }
+      100% { transform: rotate(0deg) scale(1); }
+    }
+    @keyframes navBoltPop {
+      0%   { transform: scale(1) rotate(0deg); filter: brightness(1); }
+      26%  { transform: scale(1.22) rotate(-10deg); filter: brightness(1.25); }
+      54%  { transform: scale(0.92) rotate(8deg); filter: brightness(1.05); }
+      78%  { transform: scale(1.12) rotate(-3deg); filter: brightness(1.15); }
+      100% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+    }
 
     @media (prefers-reduced-motion: reduce) {
       * { animation: none !important; transition: none !important; }
@@ -1370,6 +1437,12 @@
       if (i === j) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
     });
   }
+  function popNavIcon(btn) {
+    if (reduceMotion) return;
+    btn.classList.remove('pop');
+    void btn.offsetWidth;
+    btn.classList.add('pop');
+  }
   function goTo(i) {
     navLock = true;
     setActive(i);
@@ -1380,7 +1453,14 @@
       setActive(computeActive());
     }, reduceMotion ? 50 : 900);
   }
-  navItems.forEach((b, i) => b.addEventListener('click', () => goTo(i)));
+  navItems.forEach((b, i) => {
+    b.addEventListener('click', () => {
+      popNavIcon(b);
+      goTo(i);
+    });
+    const ic = b.querySelector('md-icon');
+    if (ic) ic.addEventListener('animationend', () => b.classList.remove('pop'));
+  });
   $('startBtn').addEventListener('click', () => goTo(1));
   $('musicBtn').addEventListener('click', () => goTo(4));
 
